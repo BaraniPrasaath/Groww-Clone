@@ -1,0 +1,65 @@
+<div class="flex justify-center items-center bg-gray-300 h-screen">
+  <div class="flex h-120 w-110 overflow-hidden rounded-l-xl">
+    <img
+      src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/_next/static/media/patternImg.f93bd17c.svg"
+      alt=""
+      class="w-130 h-120"
+    />
+    <div class="absolute px-10 py-16">
+      <div>
+        <h1 class="text-white text-3xl font-medium">Simple, Free</h1>
+        <h1 class="text-white text-3xl font-medium">Investing.</h1>
+      </div>
+      <div class="h-1.5 mt-60 w-32 bg-white rounded-full animate-line"></div>
+      <div class="mt-4">
+        <p class="text-2xl font-semibold text-white animate-smooth-blink">{{ blinkData() }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="bg-white rounded-r-xl h-116.5 w-110">
+    <div class="flex flex-col w-full items-center px-8 pt-14 gap-8">
+      <h1 class="text-3xl font-medium text-gray-700">Welcome to Groww</h1>
+      <!-- <div
+        class="flex border border-gray-300 rounded-md justify-center items-center w-80 h-12 hover:shadow-lg hover:bg-gray-100 cursor-pointer"
+      >
+        <img
+          src="https://s3-alpha.figma.com/hub/file/2729744958/2a5758d6-4edb-4047-87bb-e6b94dbbbab0-cover.png"
+          alt=""
+          class="h-7 w-13"
+        />
+        <h1 class="text-sm font-medium text-gray-700" (click)="onGoogleAuth()">Continue with Google</h1>
+      </div> -->
+      <div
+        id="google-btn"
+        class="flex justify-center items-center w-fit shadow hover:shadow-lg"
+      ></div>
+      <div class="flex gap-20 items-center">
+        <div class="w-16 h-0.5 bg-gray-200"></div>
+        <h1>Or</h1>
+        <div class="w-16 h-0.5 bg-gray-200"></div>
+      </div>
+    </div>
+    <div class="flex flex-col w-full h-30 items-center justify-center">
+      <input
+        type="text"
+        placeholder="Your Email Address"
+        class="px-2 py-3 text-sm border border-gray-300 rounded-md w-80"
+      />
+    </div>
+    <div class="flex flex-col gap-2 w-full h-30 items-center justify-center">
+      <div
+        class="bg-[#02B686] hover:bg-[#05af82] rounded-md w-84 px-1 py-2.5 text-center cursor-pointer"
+      >
+        <h1 class="text-sm font-medium text-white" routerLink="/mobileVerificaiton">Continue</h1>
+      </div>
+      <div class="flex gap-1">
+        <h1 class="text-gray-700 text-xs font-light">By proceeding, I agree to</h1>
+        <h1 class="underline cursor-pointer text-gray-700 text-xs font-light">T&C</h1>
+        <h1 class="text-gray-700 text-xs font-light">,</h1>
+        <h1 class="underline cursor-pointer text-gray-700 text-xs font-light">Privacy Policy,</h1>
+        <h1 class="text-gray-700 text-xs font-light">&</h1>
+        <h1 class="underline cursor-pointer text-gray-700 text-xs font-light">Tariff Rates</h1>
+      </div>
+    </div>
+  </div>
+</div>

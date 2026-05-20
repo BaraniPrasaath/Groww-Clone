@@ -57,3 +57,15 @@ Angular CLI does not come with an end-to-end testing framework by default. You c
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+
+## Landing Page
+    -Built Two Components
+        - Banner
+        - Marketing
+
+## The Auth Functionality
+    - Built functionality of sign-up page with Google OAuth
+    - Verified Phone Num
+    - The Back-end sent OTP to Registered Mail
+    - Entered OTP and Verified
+    - Built a success page

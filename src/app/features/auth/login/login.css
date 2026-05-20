@@ -1,0 +1,32 @@
+@layer utilities {
+  @keyframes smoothBlink {
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.1;
+    }
+  }
+
+  .animate-smooth-blink {
+    animation: smoothBlink 3s ease-in-out infinite;
+  }
+
+  @keyframes lineMove {
+    0%,
+    100% {
+      transform: scaleX(0.1);
+    }
+
+    50% {
+      transform: scaleX(0.6);
+    }
+  }
+
+  .animate-line {
+    animation: lineMove 3s ease-in-out infinite;
+    transform-origin: left;
+  }
+}
