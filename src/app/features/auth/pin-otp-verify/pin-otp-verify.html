@@ -1,0 +1,40 @@
+<!-- Background overlay -->
+<div class="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <!-- Modal -->
+  <div class="bg-white rounded-2xl w-100 px-8 py-4 relative shadow-xl">
+    <!-- Heading -->
+    <div>
+      <div class="flex justify-center p-2">
+        <i class="fa-regular fa-circle text-6xl text-emerald-500"></i>
+        <i class="fa-solid fa-lock text-3xl text-emerald-500 absolute top-9"></i>
+      </div>
+      <h2 class="text-lg font-semibold text-center text-gray-800">
+        Please enter OTP to verify PIN
+      </h2>
+    </div>
+
+    <div class="text-center mt-6 text-gray-400">
+      <span class="text-xs">An OTP has been sent to s**************s@gmail.com</span>
+
+      <button class="text-emerald-500 font-medium ml-2 text-xs hover:underline">Logout</button>
+    </div>
+
+    <!-- OTP Inputs -->
+    <div class="flex justify-center gap-3 mt-10">
+      <input
+        type="text"
+        placeholder="Enter OTP"
+        class="px-4 py-2 text-sm border border-gray-300 rounded-md"
+        [(ngModel)]="inputOTP"
+        (ngModelChange)="onOTPchange()"
+      />
+    </div>
+
+    <!-- Timer -->
+    <p class="text-center text-gray-400 text-sm mt-10">
+      Resend in
+      <span class="font-bold text-gray-600">{{ time() }}</span>
+      <span class="text-gray-400"> seconds </span>
+    </p>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnDestroy, signal } from '@angular/core';
 
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
 import { authModel, fullData } from '../../../../models/auth-data-model';
 import { SharedDataService } from '../../../services/shared-data-service';
