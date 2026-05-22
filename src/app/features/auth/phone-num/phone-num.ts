@@ -1,19 +1,27 @@
 import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
-import { OtpModel } from '../otp-model/otp-model';
 import { SharedDataService } from '../../../services/shared-data-service';
-import { FormsModule } from '@angular/forms';
-import { optDataModel } from '../../../../models/auth-data-model';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-phone-num',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './phone-num.html',
   styleUrl: './phone-num.css',
 })
 export class PhoneNum {
-  inputData = '';
+  myForm = new FormGroup({
+    mobile: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.pattern(/^\d{10}$/)],
+    }),
+  });
+
+  get mobile() {
+    return this.myForm.controls.mobile;
+  }
+
   constructor(
     private authSer: AuthService,
     private dataSer: SharedDataService,
@@ -21,10 +29,16 @@ export class PhoneNum {
   ) {}
 
   onSend() {
+    if (this.myForm.invalid) {
+      this.myForm.markAllAsTouched();
+      return;
+    }
+
     const userId: string = this.dataSer.getUserId();
-    console.log(this.inputData);
-    this.authSer.getOTP(userId, this.inputData).subscribe((res) => {
+
+    this.authSer.getOTP(userId, this.mobile.value).subscribe((res) => {
       console.log('Given OTP:', res);
+
       this.route.navigate(['/otp']);
     });
   }

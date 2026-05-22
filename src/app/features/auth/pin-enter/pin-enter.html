@@ -8,6 +8,7 @@
         <i class="fa-regular fa-circle text-6xl text-emerald-500"></i>
         <i class="fa-solid fa-lock text-3xl text-emerald-500 absolute top-9"></i>
       </div>
+
       <h2 class="text-lg font-semibold text-center text-gray-800">Set New Groww PIN</h2>
     </div>
 
@@ -16,20 +17,33 @@
       We Value Security, PIN helps keep your investments safe & secure.
     </p>
 
-    <!-- OTP Inputs -->
-    <div class="flex justify-center gap-3 mt-10">
-      <input
-        type="text"
-        placeholder="Set Pin"
-        class="px-4 py-2 text-sm border border-gray-300 rounded-md"
-        [(ngModel)]="inputPIN"
-      />
-    </div>
+    <form [formGroup]="myForm">
+      <!-- PIN Input -->
+      <div class="flex justify-center gap-3 mt-10">
+        <input
+          type="password"
+          placeholder="Set Pin"
+          class="px-4 py-2 text-sm border border-gray-300 rounded-md"
+          formControlName="inputPIN"
+          maxlength="4"
+          inputmode="numeric"
+        />
+      </div>
+
+      @if (inputPIN.hasError('required') && (inputPIN.dirty || inputPIN.touched)) {
+        <p class="text-xs text-red-700 text-center mt-2">PIN is required</p>
+      }
+
+      @if (inputPIN.hasError('pattern') && (inputPIN.dirty || inputPIN.touched)) {
+        <p class="text-xs text-red-700 text-center mt-2">PIN must contain exactly 4 digits</p>
+      }
+    </form>
 
     <!-- Button -->
     <div class="flex justify-center mt-8">
       <button
         class="bg-emerald-500 hover:bg-emerald-600 transition text-white font-medium text-sm px-6 py-2 rounded-md"
+        (click)="onSetPIN()"
       >
         SET PIN
       </button>
@@ -37,7 +51,7 @@
 
     <!-- Email + logout -->
     <div class="text-center mt-6 text-gray-400">
-      <span class="text-xs">s**************s@gmail.com</span>
+      <span class="text-xs"> s**************s@gmail.com </span>
 
       <button class="text-emerald-500 font-medium ml-2 text-xs hover:underline">Logout</button>
     </div>

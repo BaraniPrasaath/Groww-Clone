@@ -3,22 +3,38 @@
     <div class="py-6 px-6">
       <h1 class="text-xl font-medium">Verify Mobile Number</h1>
     </div>
-    <div>
-      <input
-        type="tel"
-        placeholder="Enter Mobile Number"
-        class="text-sm px-4 py-3 border border-gray-400 rounded-md"
-        [(ngModel)]="inputData"
-      />
-    </div>
+
+    <form [formGroup]="myForm">
+      <div>
+        <input
+          type="tel"
+          placeholder="Enter Mobile Number"
+          class="text-sm px-4 py-3 border border-gray-400 rounded-md"
+          formControlName="mobile"
+          maxlength="10"
+          inputmode="numeric"
+        />
+      </div>
+
+      @if (mobile.hasError('required') && (mobile.dirty || mobile.touched)) {
+        <p class="text-xs text-red-700 mt-2">Mobile number is required</p>
+      }
+
+      @if (mobile.hasError('pattern') && (mobile.dirty || mobile.touched)) {
+        <p class="text-xs text-red-700 mt-2">Enter valid 10 digit mobile number</p>
+      }
+    </form>
+
     <div class="flex flex-col gap-2">
       <div
         class="bg-[#02B686] hover:bg-[#05af82] rounded-md w-44 px-1 py-2 text-center cursor-pointer"
       >
         <h1 class="text-sm font-medium text-white" (click)="onSend()">Send</h1>
       </div>
+
       <div class="flex justify-center gap-2">
         <h1 class="text-xs text-gray-700">Your Registered Gamil</h1>
+
         <h1 class="text-green-800 text-xs">Logout</h1>
       </div>
     </div>

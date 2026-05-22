@@ -2,45 +2,67 @@ import { AfterViewInit, Component, OnDestroy, signal } from '@angular/core';
 
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../services/auth-service';
-import { authModel, fullData } from '../../../../models/auth-data-model';
+import {
+  authModel,
+  fullData,
+  returnLoginModel,
+  userLoginModel,
+} from '../../../../models/auth-data-model';
 import { SharedDataService } from '../../../services/shared-data-service';
+import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 declare const google: any;
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink],
+  imports: [ReactiveFormsModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
 export class Login implements AfterViewInit, OnDestroy {
   blinkData = signal('Stocks');
 
+  myForm = new FormGroup({
+    email: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.email],
+    }),
+
+    password: new FormControl('', {
+      nonNullable: true,
+      validators: [Validators.required, Validators.minLength(6)],
+    }),
+  });
+
+  get email() {
+    return this.myForm.controls.email;
+  }
+
+  get password() {
+    return this.myForm.controls.password;
+  }
+
+  errorMsg = signal('');
+
   data = ['Mutual Funds', 'F & O', 'IPO', 'MTF', 'Intraday', 'ETF', 'Commodities', 'Bonds'];
 
   timer: any;
 
-  authData: authModel = {
-    name: '',
+  loginData: userLoginModel = {
     email: '',
-    status: '',
-    nextStep: '',
-    userId: '',
+    password: '',
   };
 
   constructor(
     private authSer: AuthService,
     private dataSer: SharedDataService,
     private route: Router,
+    // private toster: ToastrService,
   ) {}
 
   ngAfterViewInit(): void {
     this.startBlinkAnimation();
-
-    // Wait slightly to ensure SDK is loaded
-    setTimeout(() => {
-      this.initializeGoogleAuth();
-    }, 500);
   }
 
   startBlinkAnimation() {
@@ -57,49 +79,30 @@ export class Login implements AfterViewInit, OnDestroy {
     }, 2000);
   }
 
-  initializeGoogleAuth() {
-    if (typeof google === 'undefined') {
-      console.error('Google SDK not loaded');
+  onSignIn() {
+    if (this.myForm.invalid) {
+      this.myForm.markAllAsTouched();
       return;
     }
 
-    google.accounts.id.initialize({
-      client_id: '306147110657-fn6jckl6rvsmf6haq4q4kutgpckm7ccg.apps.googleusercontent.com',
+    this.authSer.onLogin(this.email.value, this.password.value).subscribe({
+      next: (res: returnLoginModel) => {
+        console.log('Response of Login: ', res);
 
-      callback: (response: any) => {
-        const idToken = response.credential;
+        const userId = this.dataSer.getUserId();
 
-        console.log('Google Token:', idToken);
+        if (!userId) {
+          this.dataSer.setUserId(res.data.userId);
+        }
 
-        // Send token to backend
-        this.authSer.googleOAuth(idToken).subscribe({
-          next: (res: fullData) => {
-            console.log('Login Success', res);
-            console.log('the Name: ', res.data.name);
-            this.authData.name = res.data.name;
-            this.authData.email = res.data.email;
-            this.authData.status = res.data.status;
-            this.authData.nextStep = res.data.nextStep;
-            this.authData.userId = res.data.userId;
-            this.dataSer.storeUserData(this.authData);
-            this.route.navigate(['/mobileVerificaiton']);
-          },
-
-          error: (err) => {
-            console.log('Login Error', err);
-          },
-        });
+        this.route.navigate(['/pin-verify']);
       },
-    });
 
-    // Render Google Button
-    google.accounts.id.renderButton(document.getElementById('google-btn'), {
-      type: 'standard',
-      theme: 'outline',
-      size: 'large',
-      text: 'continue_with',
-      shape: 'rectangular',
-      width: 320,
+      error: (err: any) => {
+        console.log('Error from login: ', err.error.message);
+
+        this.errorMsg.set(err.error.message);
+      },
     });
   }
 

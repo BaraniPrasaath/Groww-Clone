@@ -3,12 +3,20 @@ import { authModel, fullData } from '../../../../models/auth-data-model';
 import { AuthService } from '../../../services/auth-service';
 import { SharedDataService } from '../../../services/shared-data-service';
 import { Router } from '@angular/router';
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 declare const google: any;
 
 @Component({
   selector: 'app-register',
-  imports: [],
+  imports: [FormsModule, CommonModule, ReactiveFormsModule],
   templateUrl: './register.html',
   styleUrl: './register.css',
 })
@@ -19,12 +27,18 @@ export class Register implements AfterViewInit, OnDestroy {
 
   timer: any;
 
+  myForm = new FormGroup({
+    inputData: new FormControl('', [Validators.required, Validators.email]),
+  });
+
   authData: authModel = {
     name: '',
     email: '',
     status: '',
     nextStep: '',
     userId: '',
+    redirectTo: '',
+    message: '',
   };
 
   constructor(
@@ -56,6 +70,40 @@ export class Register implements AfterViewInit, OnDestroy {
     }, 2000);
   }
 
+  onContinue() {
+    if (this.myForm.invalid) {
+      this.myForm.markAllAsTouched();
+      return;
+    }
+
+    const email = this.inputData?.value!;
+    this.authSer.register(email).subscribe({
+      next: (res: fullData) => {
+        console.log('Login Success', res);
+        console.log('the Name: ', res.data.name);
+        this.authData.name = res.data.name;
+        this.authData.email = res.data.email;
+        this.authData.status = res.data.status;
+        this.authData.nextStep = res.data.nextStep;
+        this.authData.userId = res.data.userId;
+        console.log('Recirect to: ', res.data.redirectTo);
+        if (res.data.redirectTo === 'LOGIN_PAGE') {
+          this.route.navigate(['/login']);
+        } else if (res.data.redirectTo === 'VERIFY_PIN_PAGE') {
+          this.route.navigate(['/pin-verify']);
+        } else {
+          this.dataSer.storeUserData(this.authData);
+          this.dataSer.setUserId(this.authData.userId);
+          this.route.navigate(['/mobileVerificaiton']);
+        }
+      },
+
+      error: (err) => {
+        console.log('Login Error', err);
+      },
+    });
+  }
+
   initializeGoogleAuth() {
     if (typeof google === 'undefined') {
       console.error('Google SDK not loaded');
@@ -80,8 +128,16 @@ export class Register implements AfterViewInit, OnDestroy {
             this.authData.status = res.data.status;
             this.authData.nextStep = res.data.nextStep;
             this.authData.userId = res.data.userId;
-            this.dataSer.storeUserData(this.authData);
-            this.route.navigate(['/mobileVerificaiton']);
+            console.log('Recirect to: ', res.data.redirectTo);
+            if (res.data.redirectTo === 'LOGIN_PAGE') {
+              this.route.navigate(['/login']);
+            } else if (res.data.redirectTo === 'VERIFY_PIN_PAGE') {
+              this.route.navigate(['/pin-verify']);
+            } else {
+              this.dataSer.storeUserData(this.authData);
+              this.dataSer.setUserId(this.authData.userId);
+              this.route.navigate(['/mobileVerificaiton']);
+            }
           },
 
           error: (err) => {
@@ -105,5 +161,8 @@ export class Register implements AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     clearInterval(this.timer);
   }
-}
 
+  get inputData() {
+    return this.myForm.controls.inputData;
+  }
+}

@@ -19,8 +19,13 @@
           "options": {
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/asset"],
-            "styles": ["src/styles.css"]
+            "assets": [
+              "src/asset"
+            ],
+            "styles": [
+              "node_modules/ngx-toastr/toastr.css",
+              "src/styles.css"
+            ]
           },
           "configurations": {
             "production": {
@@ -48,6 +53,11 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+            "host": "0.0.0.0",
+            "port": 4200,
+            "allowedHosts": ["*"]
+          },
           "configurations": {
             "production": {
               "buildTarget": "groww-clone:build:production"

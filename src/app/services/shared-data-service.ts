@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { authModel } from '../../models/auth-data-model';
+import { authModel, returnLoginModel } from '../../models/auth-data-model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,5 +14,9 @@ export class SharedDataService {
     const data = localStorage.getItem('UserId');
     const userId = data ? JSON.parse(data) : '';
     return userId;
+  }
+
+  setUserId(userId: string) {
+    localStorage.setItem('UserId', JSON.stringify(userId));
   }
 }

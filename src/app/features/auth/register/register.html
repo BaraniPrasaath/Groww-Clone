@@ -40,17 +40,25 @@
       </div>
     </div>
     <div class="flex flex-col w-full h-30 items-center justify-center">
-      <input
-        type="text"
-        placeholder="Your Email Address"
-        class="px-2 py-3 text-sm border border-gray-300 rounded-md w-80"
-      />
+      <form action="" [formGroup]="myForm">
+        <input
+          type="email"
+          placeholder="Your Email Address"
+          class="px-2 py-3 text-sm border border-gray-300 rounded-md w-80"
+          formControlName="inputData"
+        />
+        @if (inputData?.hasError('required') && (inputData?.dirty || inputData?.touched)) {
+          <p class="text-xs absolute right-98 text-red-700 my-2">Email is Required</p>
+        } @else if (inputData?.hasError('email') && (inputData?.dirty || inputData?.touched)) {
+          <p class="text-xs absolute right-98 text-red-700 my-2">Enter a Valid email</p>
+        }
+      </form>
     </div>
-    <div class="flex flex-col gap-2 w-full h-30 items-center justify-center">
+    <div class="flex flex-col gap-2 w-full h-30 items-center justify-center my-4">
       <div
         class="bg-[#02B686] hover:bg-[#05af82] rounded-md w-84 px-1 py-2.5 text-center cursor-pointer"
       >
-        <h1 class="text-sm font-medium text-white" routerLink="/mobileVerificaiton">Continue</h1>
+        <h1 class="text-sm font-medium text-white" (click)="onContinue()">Continue</h1>
       </div>
       <div class="flex gap-1">
         <h1 class="text-gray-700 text-xs font-light">By proceeding, I agree to</h1>

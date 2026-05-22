@@ -17,15 +17,22 @@
     </p>
 
     <!-- OTP Inputs -->
-    <div class="flex justify-center gap-3 mt-10">
+    <form [formGroup]="myForm" class="flex flex-col items-center justify-center gap-3 mt-10">
       <input
         type="text"
         placeholder="Verify Pin"
-        class="px-4 py-2 text-sm border border-gray-300 rounded-md"
-        [(ngModel)]="inputPIN"
-        (ngModelChange)="onVerify()"
+        class="px-4 py-2 text-sm border border-gray-300 rounded-md w-50"
+        maxlength="4"
+        formControlName="inputPIN"
+        (input)="onVerify()"
       />
-    </div>
+      @if (inputPIN?.hasError('required') && (inputPIN?.dirty || inputPIN?.touched)) {
+        <p class="text-xs text-red-700 text-center">PIN is Required</p>
+      }
+      @if (inputPIN?.hasError('pattern') && (inputPIN?.dirty || inputPIN?.touched)) {
+        <p class="text-xs text-red-700 text-center">Enter a Valid PIN</p>
+      }
+    </form>
 
     <!-- Email + logout -->
     <div class="text-center mt-6 text-gray-400">

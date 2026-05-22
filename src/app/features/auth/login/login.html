@@ -21,23 +21,43 @@
       <h1 class="text-3xl font-medium text-gray-700">Welcome to Groww</h1>
       <h1 class="text-3xl font-medium text-gray-700">Login</h1>
     </div>
-    <div class="flex flex-col w-full h-30 items-center justify-center gap-4 py-4">
+
+    <form
+      [formGroup]="myForm"
+      class="flex flex-col w-full h-30 items-center justify-center gap-8 py-4"
+    >
       <input
         type="email"
         placeholder="Your Email Address"
         class="px-2 py-3 text-sm border border-gray-300 rounded-md w-80"
+        formControlName="email"
       />
+      @if (email?.hasError('required') && (email?.dirty || email?.touched)) {
+        <p class="text-xs absolute right-95 text-red-700 top-72">Email is Required</p>
+      } @else if (email?.hasError('email') && (email?.dirty || email?.touched)) {
+        <p class="text-xs absolute right-94 text-red-700 top-72">Enter a Valid email</p>
+      }
       <input
         type="password"
         placeholder="Your Password"
         class="px-2 py-3 text-sm border border-gray-300 rounded-md w-80"
+        formControlName="password"
       />
+      @if (password?.hasError('required') && (password?.dirty || password?.touched)) {
+        <p class="text-xs absolute right-91 text-red-700 top-92">Password is Required</p>
+      } @else if (password?.hasError('minlength') && (password?.dirty || password?.touched)) {
+        <p class="text-xs absolute right-90 text-red-700 top-92">Enter a Valid Password</p>
+      }
+    </form>
+
+    <div class="absolute right-86">
+      <h1 class="text-sm text-red-700">{{ errorMsg() }}</h1>
     </div>
-    <div class="flex flex-col gap-2 w-full h-30 items-center justify-center pt-30">
+    <div class="flex flex-col gap-2 w-full h-30 items-center justify-center pt-35">
       <div
         class="bg-[#02B686] hover:bg-[#05af82] rounded-md w-84 px-1 py-2.5 text-center cursor-pointer"
       >
-        <h1 class="text-sm font-medium text-white" routerLink="/mobileVerificaiton">Continue</h1>
+        <h1 class="text-sm font-medium text-white" (click)="onSignIn()">Sign In</h1>
       </div>
       <div class="flex gap-1">
         <h1 class="text-gray-700 text-xs font-light">By proceeding, I agree to</h1>

@@ -8,32 +8,47 @@
         <i class="fa-regular fa-circle text-6xl text-emerald-500"></i>
         <i class="fa-solid fa-lock text-3xl text-emerald-500 absolute top-9"></i>
       </div>
+
       <h2 class="text-lg font-semibold text-center text-gray-800">
         Please enter OTP to verify PIN
       </h2>
     </div>
 
     <div class="text-center mt-6 text-gray-400">
-      <span class="text-xs">An OTP has been sent to s**************s@gmail.com</span>
+      <span class="text-xs"> An OTP has been sent to s**************s@gmail.com </span>
 
       <button class="text-emerald-500 font-medium ml-2 text-xs hover:underline">Logout</button>
     </div>
 
-    <!-- OTP Inputs -->
-    <div class="flex justify-center gap-3 mt-10">
-      <input
-        type="text"
-        placeholder="Enter OTP"
-        class="px-4 py-2 text-sm border border-gray-300 rounded-md"
-        [(ngModel)]="inputOTP"
-        (ngModelChange)="onOTPchange()"
-      />
-    </div>
+    <form [formGroup]="myForm">
+      <!-- OTP Input -->
+      <div class="flex justify-center gap-3 mt-10">
+        <input
+          type="text"
+          placeholder="Enter OTP"
+          class="px-4 py-2 text-sm border border-gray-300 rounded-md"
+          formControlName="inputOTP"
+          maxlength="6"
+          inputmode="numeric"
+          (input)="onOTPchange()"
+        />
+      </div>
+
+      @if (inputOTP.hasError('required') && (inputOTP.dirty || inputOTP.touched)) {
+        <p class="text-xs text-red-700 text-center mt-2">OTP is required</p>
+      }
+
+      @if (inputOTP.hasError('pattern') && (inputOTP.dirty || inputOTP.touched)) {
+        <p class="text-xs text-red-700 text-center mt-2">Enter a valid 6 digit OTP</p>
+      }
+    </form>
 
     <!-- Timer -->
     <p class="text-center text-gray-400 text-sm mt-10">
       Resend in
-      <span class="font-bold text-gray-600">{{ time() }}</span>
+      <span class="font-bold text-gray-600">
+        {{ time() }}
+      </span>
       <span class="text-gray-400"> seconds </span>
     </p>
   </div>

@@ -1,3 +1,43 @@
-<div class="h-40 w-full bg-blue-600">
-  <p>grid-anime works!</p>
+<div class="bg-white min-h-55 flex flex-col items-center justify-center text-center">
+  <!-- Heading -->
+  <h1 class="text-[40px] font-medium text-[#44475b] leading-tight">Build wealth, SIP by SIP</h1>
+
+  <!-- Subtitle -->
+  <p class="mt-2 text-[20px] font-medium text-gray-400">Invest in Direct Mutual Funds</p>
+
+  <!-- Button -->
+  <button
+    class="mt-3 px-5 py-2.5 bg-white border border-gray-200 rounded-full text-[#44475b] font-medium hover:bg-gray-100 cursor-pointer transition-all duration-300"
+  >
+    Invest now
+  </button>
+</div>
+<div
+  class="bg-white flex items-center justify-center relative overflow-hidden min-h-screen mask-[linear-gradient(to_right,transparent,black_15%,black_85%,transparent),linear-gradient(to_bottom,transparent,black_15%,black_85%,transparent)] mask-intersect [-webkit-mask-composite:source-in]"
+>
+  <!-- Background image -->
+  <div class="absolute inset-0 z-1 right-1.5 top-0.5">
+    <img
+      src="https://resources.groww.in/web-assets/story_assets/landing-page/home_page/mf-bg.webp"
+      alt=""
+      class="w-full h-full object-cover"
+    />
+  </div>
+
+  <!-- Grid -->
+  <div class="absolute inset-0 grid grid-cols-[repeat(18,70px)] z-5 w-full">
+    <div
+      *ngFor="let cell of cells"
+      class="w-17.5 h-17.5 border border-gray-200 bg-white hover:bg-transparent transition-all duration-500"
+    ></div>
+  </div>
+
+  <!-- Card -->
+  <div class="relative bg-white rounded-3xl overflow-hidden my-12 z-10">
+    <img
+      src="https://resources.groww.in/web-assets/story_assets/landing-page/home_page/mf-mock-image.webp"
+      alt=""
+      class="w-90 h-150 border border-gray-100 rounded-[20px]"
+    />
+  </div>
 </div>
