@@ -1,0 +1,22 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { HeroTextComponent } from './hero-text-component';
+
+describe('HeroTextComponent', () => {
+  let component: HeroTextComponent;
+  let fixture: ComponentFixture<HeroTextComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [HeroTextComponent],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(HeroTextComponent);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

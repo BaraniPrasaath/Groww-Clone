@@ -1,0 +1,52 @@
+<div class="flex flex-col bg-black py-20 mt-20">
+  <div class="py-4">
+    <h1 class="text-[42px] text-white font-medium text-center">
+      Trade Futures & Options like a pro
+    </h1>
+  </div>
+
+  <div class="flex relative min-w-screen">
+    <!-- LEFT -->
+    <div class="w-[41%] px-8 z-10">
+      @for (section of sections; track $index) {
+        <div
+          #sectionElement
+          [attr.data-index]="$index"
+          class="h-screen flex flex-col justify-center"
+        >
+          <h1 class="text-white font-medium text-[32px] mb-4 leading-tight">
+            {{ section.title }}
+          </h1>
+
+          <button
+            [ngClass]="
+              section.darkBtn
+                ? 'text-xs px-4 py-2 rounded-full text-[#F5BC56] bg-[#1d1507] w-fit'
+                : 'text-xs px-4 py-2 rounded-full bg-white w-fit'
+            "
+          >
+            {{ section.button }}
+            <span class="text-xl">›</span>
+          </button>
+        </div>
+      }
+    </div>
+
+    <!-- RIGHT -->
+    <div class="w-[52%]">
+      <div class="sticky top-13.75 h-screen flex items-center">
+        <div class="relative w-full h-150 overflow-hidden">
+          @for (section of sections; track $index) {
+            <img
+              [src]="section.image"
+              class="absolute inset-0 w-[125%] h-full object-contain translate-x-0 transition-all duration-500"
+              [ngClass]="
+                activeIndex === $index ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-6'
+              "
+            />
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

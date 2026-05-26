@@ -1,0 +1,54 @@
+<div class="animation-container" #scrollContainer>
+  <div class="sticky-viewport" [class.dark-theme]="scrollProgress > 0.4">
+    <div
+      class="light-layer"
+      [style.opacity]="getOpacity(0.3, 0.45, true)"
+      [style.pointer-events]="scrollProgress > 0.4 ? 'none' : 'auto'"
+    >
+      <h1 class="main-heading" [style.transform]="'scale(' + getScale(1, 1.5, 0, 0.4) + ')'">
+        Trusted by 130,834,586+ Indians
+      </h1>
+
+      <div class="cards-wrapper" [style.transform]="'scale(' + getScale(1, 3, 0, 0.4) + ')'">
+        <div
+          class="testimonial-card"
+          *ngFor="let card of testimonials"
+          [style.top]="card.top"
+          [style.left]="card.left"
+          [style.transform]="'scale(' + card.scale + ')'"
+        >
+          <div class="card-header">
+            <img [src]="card.image" [alt]="card.name" loading="lazy" />
+            <div class="user-info">
+              <h4>{{ card.name }}</h4>
+              <p class="role">Investor</p>
+            </div>
+          </div>
+          <p class="comment">{{ card.text }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="dark-layer">
+      <div
+        class="logo-wrapper"
+        [style.opacity]="getOpacity(0.4, 0.5)"
+        [style.transform]="'translate(-50%, -50%) scale(' + getScale(0.3, 1.2, 0.4, 0.7) + ')'"
+      >
+        <div class="glowing-circle">
+          <div class="graph-line"></div>
+        </div>
+      </div>
+
+      <div
+        class="final-content"
+        [style.opacity]="getOpacity(0.7, 0.85)"
+        [style.transform]="'translate(-50%, calc(-50% + ' + getScale(60, 0, 0.7, 0.9) + 'px))'"
+      >
+        <h2>No account opening charges, no barriers.</h2>
+        <h3>Just Groww.</h3>
+        <button class="start-btn">Start now</button>
+      </div>
+    </div>
+  </div>
+</div>

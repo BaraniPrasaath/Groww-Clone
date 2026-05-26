@@ -1,0 +1,11 @@
+/* Note: The HTML strictly uses the exact class names provided in the document 
+   (e.g., .footerTopSection_linkGrid__V5fiv, .backgroundTertiary, .contentPrimary). 
+   To maintain the 100% accurate look and layout, you will need to ensure your 
+   Angular application's global styles or this file implement the corresponding CSS rules 
+   for the grid alignments, flexbox utilities, and color variables.
+*/
+
+:host {
+  display: block;
+  width: 100%;
+}

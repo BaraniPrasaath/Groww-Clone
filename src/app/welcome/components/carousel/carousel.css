@@ -1,0 +1,15 @@
+swiper-container {
+  width: 100%;
+}
+
+swiper-container::part(wrapper) {
+  transition-timing-function: linear !important;
+}
+
+swiper-slide {
+  width: 250px;
+}
+
+swiper-slide img {
+  border-radius: 28px;
+}

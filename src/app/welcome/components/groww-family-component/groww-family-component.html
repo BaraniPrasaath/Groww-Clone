@@ -1,0 +1,23 @@
+<div class="groww-family-container">
+
+  <h2 class="title">More from the Groww family</h2>
+
+  <div class="cards-container">
+
+    <a
+      *ngFor="let card of cards"
+      class="card"
+      [href]="card.link"
+      target="_blank"
+    >
+      <img
+        [src]="card.image"
+        [alt]="card.title"
+      />
+
+      <div class="glare"></div>
+    </a>
+
+  </div>
+
+</div>
