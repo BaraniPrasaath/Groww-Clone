@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, effect, OnInit, signal } from '@angular/core';
+import { AppServices } from '../../../../../services/app/app-services';
 
 interface Stock {
   name: string;
   logo: string;
-  price: string;
-  changeValue: string;
-  changePercent: string;
+  price: number;
+  changeValue: number;
+  changePercent: number;
   isPositive: boolean;
 }
 
@@ -16,39 +17,40 @@ interface Stock {
   templateUrl: './top-intrady.html',
   styleUrl: './top-intrady.css',
 })
-export class TopIntrady {
-  stocks: Stock[] = [
-    {
-      name: 'Apollo Micro Systems',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/AMS_BANSAL1.webp',
-      price: '₹418.05',
-      changeValue: '5.95',
-      changePercent: '(1.44%)',
-      isPositive: true,
-    },
-    {
-      name: 'Adani Total Gas',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/ATGL.webp',
-      price: '₹774.10',
-      changeValue: '61.00',
-      changePercent: '(8.55%)',
-      isPositive: true,
-    },
-    {
-      name: 'Adani Power',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/ATGL.webp',
-      price: '₹247.70',
-      changeValue: '3.17',
-      changePercent: '(1.30%)',
-      isPositive: true,
-    },
-    {
-      name: 'MTAR Technologies',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/MTARTECH.webp',
-      price: '₹7,801.50',
-      changeValue: '-76.50',
-      changePercent: '(0.97%)',
-      isPositive: false,
-    },
-  ];
+export class TopIntrady implements OnInit {
+  stocks = signal<Stock[]>([]);
+
+  constructor(private appSer: AppServices) {
+    effect(() => {
+      console.log(this.stocks());
+    });
+  }
+
+  ngOnInit(): void {
+    this.appSer.getTopIntrady().subscribe({
+      next: (res) => {
+        console.log('Top Intrady response: ', res);
+        res.exploreCompanies.POPULAR_STOCKS_INTRADAY_VOLUME.forEach((data) => {
+          const dataArr = {
+            name: '',
+            logo: '',
+            price: 0,
+            changeValue: 0,
+            changePercent: 0,
+            isPositive: false,
+          };
+          dataArr.name = data.company.companyShortName;
+          dataArr.logo = data.company.imageUrl;
+          dataArr.price = data.stats.ltp;
+          dataArr.changeValue = data.stats.ltp - data.stats.close;
+          dataArr.changePercent = ((data.stats.ltp - data.stats.close) / data.stats.close) * 100;
+          dataArr.isPositive = dataArr.changeValue > 0 ? true : false;
+          this.stocks.update((stock) => [...stock, dataArr]);
+        });
+      },
+      error: (err) => {
+        console.log('Top Intrady error: ', err);
+      },
+    });
+  }
 }
