@@ -19,4 +19,13 @@ export class SharedDataService {
   setUserId(userId: string) {
     localStorage.setItem('UserId', JSON.stringify(userId));
   }
+
+  setUserProfile(profile: string) {
+    localStorage.setItem('user profile', profile);
+  }
+
+  getUserProfile() {
+    const data = localStorage.getItem('user profile');
+    return data;
+  }
 }

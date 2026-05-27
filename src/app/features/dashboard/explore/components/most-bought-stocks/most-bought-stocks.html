@@ -1,0 +1,39 @@
+<div class="max-w-4xl ml-4 p-4 font-sans">
+  <h2 class="text-xl font-medium text-gray-800 mb-4">Most bought stocks on Groww</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div
+      *ngFor="let stock of stocks"
+      class="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer bg-white"
+    >
+      <img
+        [src]="stock.logo"
+        [alt]="stock.name"
+        class="w-10 h-10 mb-3 rounded-md border border-gray-100"
+      />
+
+      <h3 class="font-normal text-gray-600 mb-8 truncate text-sm">{{ stock.name }}</h3>
+
+      <div class="font-medium text-gray-600 text-sm">{{ stock.price }}</div>
+
+      <div class="text-green-700 font-medium text-sm">
+        {{ stock.change }} ({{ stock.percentage }})
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="mt-6 text-[#00b386] text-sm font-semibold cursor-pointer hover:underline inline-flex items-center"
+  >
+    See more
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-4 w-4 ml-1"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+    </svg>
+  </div>
+</div>

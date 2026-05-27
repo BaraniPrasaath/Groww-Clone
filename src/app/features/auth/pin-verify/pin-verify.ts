@@ -37,9 +37,11 @@ export class PinVerify {
       const userId = this.dataSer.getUserId();
       this.authSer.verifyPIN(userId, this.inputPIN.value).subscribe((res: tokenModel) => {
         console.log('response of verify pin: ', res);
+        const profile = res.data.user.profileImage ? res.data.user.profileImage : '';
+        this.dataSer.setUserProfile(profile);
         this.route.navigate(['/success']);
         setTimeout(() => {
-          this.route.navigate(['/home']);
+          this.route.navigate(['/explore']);
         }, 2000);
       });
     }

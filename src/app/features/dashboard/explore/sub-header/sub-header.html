@@ -1,0 +1,59 @@
+<div class="bg-white border-b border-gray-200">
+  <div class="flex justify-between mx-9 items-center h-9">
+    <!-- LEFT MENU -->
+    <div class="relative flex gap-1.5">
+      @for (item of tabs; track item; let i = $index) {
+        <button
+          (click)="changeTab(i, item)"
+          class="relative pb-4 text-sm font-medium w-20"
+          [class.text-black]="activeTab === i"
+          [class.text-gray-500]="activeTab !== i"
+        >
+          {{ item }}
+        </button>
+      }
+
+      <!-- Single moving underline -->
+      <div
+        class="absolute bottom-0 h-0.5 w-20 bg-[#44475b] transition-transform duration-300 ease-in-out"
+        [style.transform]="'translateX(' + activeTab * 86 + 'px)'"
+      ></div>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="flex gap-2">
+      <button class="border border-gray-300 rounded-md px-3 py-1 text-xs">Terminal</button>
+
+      <button class="border border-gray-300 rounded-md px-3 py-1 text-xs">915</button>
+    </div>
+  </div>
+</div>
+<div class="flex items-center mr-8 w-full border-b border-gray-200">
+  <div class="flex items-center h-12 overflow-x-auto hide-scrollbar ml-8 mr-16">
+    <div
+      *ngFor="let item of stockPrice()"
+      class="flex items-center gap-2 px-8 whitespace-nowrap shrink-0"
+    >
+      <span class="font-normal text-slate-700 text-sm">
+        {{ item.name }}
+      </span>
+
+      <span class="text-gray-500 text-sm">
+        {{ item.spotPrice }}
+      </span>
+
+      <span
+        class="text-sm font-light"
+        [ngClass]="{
+          'text-green-600': !item.decOrincPrice.includes('-'),
+          'text-red-600': item.decOrincPrice.includes('-'),
+        }"
+      >
+        {{ item.decOrincPrice }}
+      </span>
+    </div>
+    <div class="border absolute right-5 p-2 rounded-md py-0.5 mx-1.5">
+      <i class="fa-solid fa-globe"></i>
+    </div>
+  </div>
+</div>

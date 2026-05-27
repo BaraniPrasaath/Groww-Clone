@@ -1,0 +1,35 @@
+<div class="bg-white">
+  <div class="flex justify-between mx-8 py-3">
+    <div class="flex items-center gap-4">
+      <div class="flex justify-center items-center">
+        <img
+          src="https://resources.groww.in/web-assets/img/website-logo/story_default_all_viewed_dark.png"
+          alt=""
+          class="h-10 w-10"
+        />
+      </div>
+      <div class="flex gap-4">
+        <h1 class="text-black text-xl font-medium cursor-pointer">Stocks</h1>
+        <h1 class="text-black text-xl font-medium cursor-pointer">F&O</h1>
+        <h1 class="text-black text-xl font-medium cursor-pointer">Mutual Funds</h1>
+      </div>
+    </div>
+    <div class="flex gap-4 w-110 justify-between">
+      <div class="flex">
+        <i class="fa-solid fa-magnifying-glass absolute right-110 top-6.5 text-gray-500 text-sm"></i>
+        <input
+          type="text"
+          placeholder="Search Groww...."
+          class="border rounded-md border-gray-500 pl-14 py-2 w-76"
+        />
+        <div class="absolute top-6.5 right-45">
+          <h1 class="text-[11px] text-gray-500">Ctrl+k</h1>
+        </div>
+      </div>
+      <div class="flex justify-center items-center mx-1 gap-10">
+        <i class="fa-regular fa-bell text-xl text-black"></i>
+        <img [src]="profile()" alt="" class="h-8 w-8 rounded-full" />
+      </div>
+    </div>
+  </div>
+</div>

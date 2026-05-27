@@ -9,7 +9,7 @@ import { PinOtpVerify } from './features/auth/pin-otp-verify/pin-otp-verify';
 import { SetPassword } from './features/auth/set-password/set-password';
 import { Register } from './features/auth/register/register';
 import { PinVerify } from './features/auth/pin-verify/pin-verify';
-import { Home } from './features/dashboard/pages/home/home';
+import { MainComponent } from './features/dashboard/explore/main-component/main-component';
 
 export const routes: Routes = [
   {
@@ -53,7 +53,7 @@ export const routes: Routes = [
     component: PinVerify,
   },
   {
-    path: 'home',
-    component: Home,
+    path: 'explore',
+    component: MainComponent,
   },
 ];

@@ -1,0 +1,22 @@
+<div class="max-w-md py-4 font-sans text-gray-800 mx-8">
+  <h2 class="text-xl font-semibold mb-4">Products & Tools</h2>
+
+  <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+    <div
+      *ngFor="let item of items; last as isLast"
+      class="flex items-center px-4 py-5.5 hover:bg-gray-50 cursor-pointer transition-colors"
+      [ngClass]="{ 'border-b border-gray-100': !isLast }"
+    >
+      <img [src]="item.icon" [alt]="item.name" class="w-6 h-6 mr-4" />
+
+      <span class="grow font-medium text-sm">{{ item.name }}</span>
+
+      <span
+        *ngIf="item.badge"
+        class="bg-green-50 text-green-600 text-[11px] font-medium px-2 rounded"
+      >
+        {{ item.badge }}
+      </span>
+    </div>
+  </div>
+</div>

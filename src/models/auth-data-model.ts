@@ -42,6 +42,7 @@ export interface userofData {
   userId: string;
   email: string;
   name: string;
+  profileImage: string | null;
 }
 
 export interface userTokenModel {

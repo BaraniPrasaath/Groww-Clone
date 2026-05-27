@@ -1,0 +1,70 @@
+<div class="max-w-225 p-4 ml-4 font-sans text-[#44475b]">
+  <h2 class="text-xl font-medium text-gray-800 mb-4">Sectors trending today</h2>
+
+  <div class="border border-[#e8e9eb] rounded-xl overflow-hidden bg-white shadow-sm pt-2">
+    <div
+      class="grid grid-cols-[1.2fr_2fr_1fr] px-6 py-3 border-b border-dashed border-[#d1d5db] text-[11px] text-[#7b809a] font-medium"
+    >
+      <div class="text-center">Sector</div>
+      <div class="text-center">Gainers/Losers</div>
+      <div class="text-right">1D price change</div>
+    </div>
+
+    <div class="flex flex-col">
+      <div
+        *ngFor="let sector of sectors"
+        class="grid grid-cols-[1.2fr_2fr_1fr] items-center px-6 py-3 border-b border-[#e8e9eb] last:border-b-0 hover:bg-[#f8f9fa] transition-colors cursor-pointer"
+      >
+        <div class="flex items-center gap-4 pl-1">
+          <div class="w-9.5 h-9.5 rounded-lg bg-[#f8f9fa] flex items-center justify-center p-1.5">
+            <img
+              [src]="sector.icon"
+              [alt]="sector.name"
+              class="w-full h-full object-contain opacity-80"
+            />
+          </div>
+          <span class="font-medium text-[12px] text-[#44475b]">{{ sector.name }}</span>
+        </div>
+
+        <div class="flex flex-col justify-center items-center w-full px-8">
+          <div class="w-full max-w-65">
+            <div class="flex justify-between text-[11px] font-medium text-[#44475b] mb-1.5">
+              <span>{{ sector.gainers }}</span>
+              <span>{{ sector.losers }}</span>
+            </div>
+
+            <div class="flex w-full h-1 rounded-full overflow-hidden gap-0.5">
+              <div
+                class="bg-[#00b386] rounded-l-full transition-all duration-500"
+                [style.width.%]="getGreenWidth(sector.gainers, sector.losers)"
+              ></div>
+              <div
+                class="bg-[#eb5b3c] rounded-r-full transition-all duration-500"
+                [style.width.%]="getRedWidth(sector.gainers, sector.losers)"
+              ></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-right pr-1">
+          <span
+            class="font-medium text-[13px]"
+            [ngClass]="sector.isPositive ? 'text-[#00b386]' : 'text-[#eb5b3c]'"
+          >
+            {{ sector.priceChange }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5">
+    <a
+      href="#"
+      class="inline-flex items-center gap-1 text-[14px] font-semibold text-[#00b386] hover:underline cursor-pointer"
+    >
+      See all sectors
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+  </div>
+</div>

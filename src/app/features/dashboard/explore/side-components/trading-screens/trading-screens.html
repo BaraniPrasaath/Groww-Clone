@@ -1,0 +1,40 @@
+<div class="max-w-md py-4 font-sans text-gray-800 mx-8 sticky top-10">
+  <h2 class="text-xl font-semibold mb-4">Trading Screens</h2>
+
+  <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm bg-white">
+    <div
+      *ngFor="let item of items"
+      class="flex items-center justify-between px-4 py-4 border-b border-gray-100 hover:bg-gray-50 cursor-pointer"
+    >
+      <div class="flex flex-col gap-1">
+        <span
+          [ngClass]="
+            item.sentiment === 'Bullish'
+              ? 'bg-green-50 text-green-600'
+              : 'bg-orange-50 text-red-500'
+          "
+          class="text-[10px] font-medium px-1.5 py-0.5 rounded w-max tracking-wider"
+        >
+          {{ item.sentiment }}
+        </span>
+        <span class="font-medium text-sm text-slate-700">{{ item.title }}</span>
+      </div>
+      <img [src]="item.icon" [alt]="item.title" class="w-22 h-20 object-contain" />
+    </div>
+
+    <div
+      class="px-4 py-4 text-center cursor-pointer hover:bg-gray-50 text-green-600 font-semibold text-sm flex items-center justify-center"
+    >
+      Intraday screener
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4 ml-1"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </div>
+  </div>
+</div>

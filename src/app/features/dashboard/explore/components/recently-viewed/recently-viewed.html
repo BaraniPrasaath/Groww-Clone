@@ -1,0 +1,19 @@
+<div class="max-w-4xl ml-4 p-4 font-sans text-gray-800">
+  <h2 class="text-xl font-medium text-gray-800 mb-4">Recently viewed</h2>
+
+  <div class="flex items-center gap-4 overflow-x-auto pb-2">
+    <div *ngFor="let stock of recentStocks" 
+         class="flex flex-col items-center min-w-17.5 ml-3 cursor-pointer hover:opacity-80 transition-opacity">
+      
+      <div class="w-12 h-12 mb-1 flex items-center justify-center">
+        <img [src]="stock.logo" [alt]="stock.symbol" class="w-8.5 h-8.5 object-contain rounded-sm border border-gray-100">
+      </div>
+
+      <span class="text-[11px] font-medium text-gray-700 truncate w-full text-center mb-0.5">{{ stock.symbol }}</span>
+      <span class="text-xs font-normal" 
+            [ngClass]="stock.isPositive ? 'text-green-600' : 'text-red-500'">
+        {{ stock.change }}
+      </span>
+    </div>
+  </div>
+</div>

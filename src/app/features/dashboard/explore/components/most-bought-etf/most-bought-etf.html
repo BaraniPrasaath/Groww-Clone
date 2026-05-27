@@ -1,0 +1,44 @@
+<div class="max-w-4xl ml-4 p-4 font-sans text-gray-800">
+  <h2 class="text-xl font-medium text-gray-800 mb-8">Most bought ETFs</h2>
+
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+    <div
+      *ngFor="let etf of etfs"
+      class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow cursor-pointer bg-white flex flex-col"
+    >
+      <div
+        class="px-4 py-3 border-b border-gray-100 flex justify-between items-center bg-gray-50/50"
+      >
+        <span class="text-[10px] font-normal text-gray-400 tracking-wider">{{ etf.category }}</span>
+        <i class="fa-solid fa-angle-right text-gray-400 text-xs"></i>
+      </div>
+
+      <div class="p-4 grow">
+        <div class="flex justify-between items-start gap-2 mb-4">
+          <h3 class="text-xs font-normal text-gray-600 leading-tight">{{ etf.name }}</h3>
+          <img
+            [src]="etf.logo"
+            [alt]="etf.name"
+            class="w-8 h-8 rounded border border-gray-100 shrink-0"
+          />
+        </div>
+
+        <div class="font-normal text-[13px] text-gray-800 mb-0.5">{{ etf.price }}</div>
+
+        <div
+          [ngClass]="etf.isPositive ? 'text-green-600' : 'text-red-500'"
+          class="font-normal text-sm"
+        >
+          {{ etf.changeValue }} {{ etf.changePercent }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="mt-4 text-[#00b386] font-semibold cursor-pointer hover:underline inline-flex items-center text-sm"
+  >
+    See all ETFs
+    <i class="fa-solid fa-angle-right ml-2"></i>
+  </div>
+</div>
