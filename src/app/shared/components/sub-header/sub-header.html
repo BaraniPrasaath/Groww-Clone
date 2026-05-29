@@ -5,7 +5,7 @@
       @for (item of tabs; track item; let i = $index) {
         <button
           (click)="changeTab(i, item)"
-          class="relative pb-4 text-sm font-medium w-20"
+          class="relative pb-4 text-sm font-medium w-20 cursor-pointer"
           [class.text-black]="activeTab === i"
           [class.text-gray-500]="activeTab !== i"
         >

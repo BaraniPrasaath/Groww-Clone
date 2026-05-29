@@ -6,8 +6,8 @@ interface Stock {
   name: string;
   logo: string;
   price: number;
-  changeValue: number;
-  changePercent: number;
+  changeValue: string;
+  changePercent: string;
   isPositive: boolean;
 }
 
@@ -35,16 +35,17 @@ export class MostTraded implements OnInit {
             name: '',
             logo: '',
             price: 0,
-            changeValue: 0,
-            changePercent: 0,
+            changeValue: '',
+            changePercent: '',
             isPositive: false,
           };
           dataArr.name = data.company.companyShortName;
           dataArr.logo = data.company.imageUrl;
           dataArr.price = data.stats.ltp;
-          dataArr.changeValue = data.stats.ltp - data.stats.close;
-          dataArr.changePercent = ((data.stats.ltp - data.stats.close) / data.stats.close) * 100;
-          dataArr.isPositive = dataArr.changeValue > 0 ? true : false;
+          const changeValue = data.stats.ltp - data.stats.close
+          dataArr.changeValue = changeValue.toFixed(2);
+          dataArr.changePercent = changeValue>0?'('+(((data.stats.ltp - data.stats.close) / data.stats.close) * 100).toFixed(2) + '%)':'('+(((data.stats.ltp - data.stats.close) / data.stats.close) * 100 * -1).toFixed(2) + '%)';
+          dataArr.isPositive = changeValue > 0 ? true : false;
           this.stocks.update((stock) => [...stock, dataArr]);
         });
       },

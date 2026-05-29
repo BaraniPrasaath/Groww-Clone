@@ -3,7 +3,7 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
     <div
-      *ngFor="let etf of etfs"
+      *ngFor="let etf of etfs()"
       class="border border-gray-200 rounded-xl overflow-hidden hover:shadow-md transition-shadow cursor-pointer bg-white flex flex-col"
     >
       <div
@@ -23,7 +23,7 @@
           />
         </div>
 
-        <div class="font-normal text-[13px] text-gray-800 mb-0.5">{{ etf.price }}</div>
+        <div class="font-normal text-[13px] text-gray-800 mb-0.5">{{ etf.price | currency: 'INR' }}</div>
 
         <div
           [ngClass]="etf.isPositive ? 'text-green-600' : 'text-red-500'"

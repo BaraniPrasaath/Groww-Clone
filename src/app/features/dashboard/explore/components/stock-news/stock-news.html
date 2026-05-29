@@ -3,7 +3,7 @@
 
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <div
-      *ngFor="let item of newsStocks"
+      *ngFor="let item of newsStocks()"
       class="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer bg-white flex flex-col h-full"
     >
       <div class="flex flex-col items-start mb-2">
@@ -29,13 +29,13 @@
         </div>
       </div>
       <div class="border-l h-10 border-gray-300 mb-4">
-        <p class="text-xs text-gray-600 leading-relaxed ml-2 grow">
+        <p class="text-xs text-gray-600 leading-relaxed ml-2 grow line-clamp-2">
           {{ item.snippet }}
         </p>
       </div>
 
       <div class="text-[11px] text-gray-500 font-medium">
-        {{ item.time }}
+        {{ item.time | timeAgoPipe }}
       </div>
     </div>
   </div>

@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { price2show } from '../../../../../models/price2show';
-import { WelcomeService } from '../../../../services/welcome-service';
-import { commodityDetails } from '../../../../../models/MarketPrice';
+import { price2show } from '../../../../models/price2show';
+import { WelcomeService } from '../../../services/welcome-service';
+import { commodityDetails } from '../../../../models/MarketPrice';
 
 @Component({
   selector: 'app-sub-header',

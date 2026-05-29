@@ -72,8 +72,8 @@
         </div>
 
         <div class="text-right flex flex-col justify-center">
-          <span class="font-light text-[15px] text-[#44475b]">{{ stock.price }}</span>
-          <span class="text-[13px] font-medium text-[#00b386] mt-0.5">{{ stock.change }}</span>
+          <span class="font-light text-[15px] text-[#44475b]">{{ stock.price | currency:'INR' }}</span>
+          <span class="text-[13px] font-medium text-[#00b386] mt-0.5">{{ stock.change }} {{ stock.changePercent }}</span>
         </div>
 
         <div class="text-right pr-2 relative flex items-center justify-end h-full">

@@ -10,6 +10,7 @@ import { SetPassword } from './features/auth/set-password/set-password';
 import { Register } from './features/auth/register/register';
 import { PinVerify } from './features/auth/pin-verify/pin-verify';
 import { MainComponent } from './features/dashboard/explore/main-component/main-component';
+import { FloatingHeader } from './shared/components/floating-header/floating-header';
 
 export const routes: Routes = [
   {
@@ -56,4 +57,8 @@ export const routes: Routes = [
     path: 'explore',
     component: MainComponent,
   },
+  {
+    path:'dummy',
+    component:FloatingHeader,
+  }
 ];

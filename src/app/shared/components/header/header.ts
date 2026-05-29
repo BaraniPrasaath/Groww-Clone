@@ -1,5 +1,5 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { SharedDataService } from '../../../../services/shared-data-service';
+import { SharedDataService } from '../../../services/shared-data-service';
 
 @Component({
   selector: 'app-header',

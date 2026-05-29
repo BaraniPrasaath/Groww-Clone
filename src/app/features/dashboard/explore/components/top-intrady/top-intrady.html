@@ -14,7 +14,7 @@
 
       <h3 class="font-normal text-gray-600 mb-8 truncate text-sm">{{ stock.name }}</h3>
 
-      <div class="font-medium text-gray-600 text-sm">{{ stock.price }}</div>
+      <div class="font-medium text-gray-600 text-sm">{{ stock.price | currency:'INR' }}</div>
 
       <div
         [ngClass]="stock.isPositive ? 'text-green-600' : 'text-red-500'"

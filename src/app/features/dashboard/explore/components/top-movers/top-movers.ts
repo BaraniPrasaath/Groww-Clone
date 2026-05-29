@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { AppServices } from '../../../../../services/app/app-services';
 import { TopMoversResponse } from '../../../../../../models/TopMoversResponse';
@@ -7,14 +7,16 @@ interface Stock {
   name: string;
   logo: string;
   price: number;
-  change: number;
+  change: string;
+  changePercent: string;
   volume: number;
   isHovered?: boolean;
+  isPositive: boolean;
 }
 
 @Component({
   selector: 'app-top-movers',
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe],
   templateUrl: './top-movers.html',
   styleUrl: './top-movers.css',
 })
@@ -36,14 +38,18 @@ export class TopMovers implements OnInit {
             name: '',
             logo: '',
             price: 0,
-            change: 0,
+            change: '',
+            changePercent: '',
             volume: 0,
             isHovered: false,
+            isPositive: false,
           };
           dataArr.name = data.companyName;
           dataArr.logo = data.logoUrl;
           dataArr.price = data.ltp;
-          dataArr.change = data.ltp - data.close;
+          dataArr.change = (data.ltp - data.close).toFixed(2);
+          const change = data.ltp - data.close
+          dataArr.changePercent = change > 0 ? '('+(((data.ltp - data.close) / data.close)*100).toFixed(2)+'%)' : '('+(((data.ltp - data.close) / data.close)*100*-1).toFixed(2)+'%)';
           dataArr.volume = data.volumeWeekAvg;
           this.stocks.update((stock) => [...stock, dataArr]);
         });

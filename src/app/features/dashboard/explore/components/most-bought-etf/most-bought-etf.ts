@@ -1,5 +1,9 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, CurrencyPipe } from '@angular/common';
+import { Component, effect, OnInit, signal } from '@angular/core';
+import { AppServices } from '../../../../../services/app/app-services';
+import { ObservableNotification } from 'rxjs';
+import { ExploreCompanies } from '../../../../../../models/ExploreCompaniesResponse';
+import { ExploreCompaniesResponse_etf } from '../../../../../../models/ExploreCompaniesResponse_etf';
 
 interface ETF {
   category: string;
@@ -13,47 +17,57 @@ interface ETF {
 
 @Component({
   selector: 'app-most-bought-etf',
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe],
   templateUrl: './most-bought-etf.html',
   styleUrl: './most-bought-etf.css',
 })
-export class MostBoughtEtf {
-  etfs: ETF[] = [
-    {
-      category: 'GOLD',
-      name: 'Tata Gold Exchange Trade...',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/tata_groww.png',
-      price: '₹15.14',
-      changeValue: '-0.07',
-      changePercent: '(0.46%)',
-      isPositive: false,
-    },
-    {
-      category: 'SILVER',
-      name: 'Nippon India Silver ETF',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/nippon_groww.png',
-      price: '₹250.04',
-      changeValue: '-1.25',
-      changePercent: '(0.50%)',
-      isPositive: false,
-    },
-    {
-      category: 'INTERNATIONAL',
-      name: 'Motilal Oswal MOSt Shares...',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/motilal_groww.png',
-      price: '₹328.74',
-      changeValue: '-1.60',
-      changePercent: '(0.48%)',
-      isPositive: false,
-    },
-    {
-      category: 'NIFTY 50',
-      name: 'Nippon India ETF Nifty 50 BeES',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/nippon_groww.png',
-      price: '₹270.72',
-      changeValue: '-0.11',
-      changePercent: '(0.04%)',
-      isPositive: false,
-    },
-  ];
+export class MostBoughtEtf implements OnInit{
+  etfs = signal<ETF[]>([]);
+
+  constructor(private appSer:AppServices){
+    effect(()=>{
+      console.log(this.etfs())
+    })
+  }
+
+  ngOnInit(): void {
+    this.appSer.getMostBroughtETF().subscribe({
+      next: (res:ExploreCompaniesResponse_etf)=>{
+        console.log("Most brought eft: ", res);
+        // Define the desired display order
+const CATEGORY_ORDER = [
+  'POPULAR_STOCKS_MOST_BOUGHT_ETF_GOLD',
+  'POPULAR_STOCKS_MOST_BOUGHT_ETF_SILVER',
+  'POPULAR_STOCKS_MOST_BOUGHT_ETF_INTERNATIONAL',
+  'POPULAR_STOCKS_MOST_BOUGHT_ETF_NIFTY_FIFTY'
+];
+
+// Inside your data processing function:
+const transformedData: ETF[] = [];
+
+// Loop through your defined order, not the API object
+CATEGORY_ORDER.forEach(key => {
+  const companies = res.exploreCompanies[key];
+  
+  if (companies) {
+    companies.forEach(item => {
+      const changeValue = item.stats.dayChange;
+      transformedData.push({
+        // Strip the "POPULAR_STOCKS_MOST_BOUGHT_ETF_" prefix for a cleaner UI category name
+        category: key.replace('POPULAR_STOCKS_MOST_BOUGHT_ETF_', ''), 
+        name: item.company.companyName,
+        logo: item.company.imageUrl,
+        price: item.stats.ltp.toFixed(2),
+        changeValue: item.stats.dayChange.toFixed(2),
+        changePercent: changeValue>0?'('+item.stats.dayChangePerc.toFixed(2) + '%)':'('+(item.stats.dayChangePerc * (-1)).toFixed(2) + '%)',
+        isPositive: item.stats.dayChange >= 0
+      });
+    });
+  }
+});
+
+this.etfs.set(transformedData);
+      }
+    })
+  }
 }

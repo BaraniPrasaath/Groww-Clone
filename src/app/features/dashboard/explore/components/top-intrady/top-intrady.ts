@@ -1,4 +1,4 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { AppServices } from '../../../../../services/app/app-services';
 
@@ -6,14 +6,14 @@ interface Stock {
   name: string;
   logo: string;
   price: number;
-  changeValue: number;
-  changePercent: number;
+  changeValue: string;
+  changePercent: string;
   isPositive: boolean;
 }
 
 @Component({
   selector: 'app-top-intrady',
-  imports: [CommonModule],
+  imports: [CommonModule, CurrencyPipe],
   templateUrl: './top-intrady.html',
   styleUrl: './top-intrady.css',
 })
@@ -35,16 +35,18 @@ export class TopIntrady implements OnInit {
             name: '',
             logo: '',
             price: 0,
-            changeValue: 0,
-            changePercent: 0,
+            changeValue: '',
+            changePercent: '',
             isPositive: false,
           };
           dataArr.name = data.company.companyShortName;
           dataArr.logo = data.company.imageUrl;
           dataArr.price = data.stats.ltp;
-          dataArr.changeValue = data.stats.ltp - data.stats.close;
-          dataArr.changePercent = ((data.stats.ltp - data.stats.close) / data.stats.close) * 100;
-          dataArr.isPositive = dataArr.changeValue > 0 ? true : false;
+          const changeValue = data.stats.ltp - data.stats.close
+          dataArr.changeValue = changeValue.toFixed(2);
+          const changePercent = ((data.stats.ltp - data.stats.close) / data.stats.close) * 100;
+          dataArr.changePercent = changeValue>0 ? '('+changePercent.toFixed(2)+'%)':'('+(changePercent*-1).toFixed(2)+'%)';
+          dataArr.isPositive = changeValue > 0 ? true : false;
           this.stocks.update((stock) => [...stock, dataArr]);
         });
       },
