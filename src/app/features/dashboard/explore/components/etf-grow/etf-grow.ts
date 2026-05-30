@@ -1,6 +1,7 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { AppServices } from '../../../../../services/app/app-services';
+import { RouterLink } from '@angular/router';
 
 // Ensure this interface matches the structure you want in your UI
 interface Etf {
@@ -16,7 +17,7 @@ interface Etf {
 @Component({
   selector: 'app-etf-grow',
   standalone: true, // Ensure this is true if using imports array
-  imports: [CommonModule, CurrencyPipe],
+  imports: [CommonModule, CurrencyPipe, RouterLink],
   templateUrl: './etf-grow.html',
   styleUrl: './etf-grow.css',
 })

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { AppServices } from '../../../../../services/app/app-services';
+import { RouterLink } from '@angular/router';
 
 interface Stock {
   name: string;
@@ -13,7 +14,7 @@ interface Stock {
 
 @Component({
   selector: 'app-most-traded',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './most-traded.html',
   styleUrl: './most-traded.css',
 })
@@ -42,9 +43,16 @@ export class MostTraded implements OnInit {
           dataArr.name = data.company.companyShortName;
           dataArr.logo = data.company.imageUrl;
           dataArr.price = data.stats.ltp;
-          const changeValue = data.stats.ltp - data.stats.close
+          const changeValue = data.stats.ltp - data.stats.close;
           dataArr.changeValue = changeValue.toFixed(2);
-          dataArr.changePercent = changeValue>0?'('+(((data.stats.ltp - data.stats.close) / data.stats.close) * 100).toFixed(2) + '%)':'('+(((data.stats.ltp - data.stats.close) / data.stats.close) * 100 * -1).toFixed(2) + '%)';
+          dataArr.changePercent =
+            changeValue > 0
+              ? '(' +
+                (((data.stats.ltp - data.stats.close) / data.stats.close) * 100).toFixed(2) +
+                '%)'
+              : '(' +
+                (((data.stats.ltp - data.stats.close) / data.stats.close) * 100 * -1).toFixed(2) +
+                '%)';
           dataArr.isPositive = changeValue > 0 ? true : false;
           this.stocks.update((stock) => [...stock, dataArr]);
         });

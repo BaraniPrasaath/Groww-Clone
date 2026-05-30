@@ -1,0 +1,234 @@
+<div class="min-h-screen bg-gray-50 py-8 px-4 font-sans text-[#44475b]">
+  <div class="max-w-350 mx-auto">
+    <div class="mb-6 flex items-center gap-3">
+      <h1 class="text-2xl font-semibold text-[#44475b]">ETF Stocks Screener</h1>
+      <button class="text-gray-400 hover:text-gray-600 transition-colors">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-5 w-5"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+          />
+        </svg>
+      </button>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-3 mb-6">
+      <button
+        class="w-9 h-9 rounded-full border border-gray-200 flex items-center justify-center bg-white hover:bg-gray-50 text-gray-600"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="h-4 w-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          />
+        </svg>
+      </button>
+
+      <div class="w-px h-6 bg-gray-300 mx-1"></div>
+
+      <button
+        class="px-4 py-1.5 rounded-full border border-gray-200 bg-white text-[13px] font-medium hover:bg-gray-50"
+      >
+        Nifty 50
+      </button>
+      <button
+        class="px-4 py-1.5 rounded-full border border-gray-200 bg-white text-[13px] font-medium hover:bg-gray-50"
+      >
+        Gold
+      </button>
+      <button
+        class="px-4 py-1.5 rounded-full border border-gray-200 bg-white text-[13px] font-medium hover:bg-gray-50"
+      >
+        Silver
+      </button>
+      <button
+        class="px-4 py-1.5 rounded-full border border-gray-200 bg-white text-[13px] font-medium hover:bg-gray-50"
+      >
+        International
+      </button>
+      <button
+        class="px-4 py-1.5 rounded-full border border-gray-200 bg-white text-[13px] font-medium hover:bg-gray-50"
+      >
+        Debt
+      </button>
+
+      <button class="text-[#00d09c] text-[13px] font-medium ml-2 hover:underline">Clear all</button>
+    </div>
+
+    <div
+      class="bg-white rounded-xl border border-gray-200 shadow-sm relative w-full overflow-hidden"
+    >
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left whitespace-nowrap min-w-300">
+          <thead
+            class="text-[13px] text-gray-500 font-medium border-b border-gray-100 bg-[#fbfbfb]"
+          >
+            <tr>
+              <th class="py-4 px-6 font-medium">Company</th>
+              <th class="py-4 px-4 font-medium"></th>
+              <th class="py-4 px-6 font-medium text-right flex items-center gap-1 justify-end">
+                Market price <span class="text-[10px]">⇕</span>
+              </th>
+              <th class="py-4 px-6 font-medium text-center">
+                1D price change <span class="text-[10px]">⇕</span>
+              </th>
+              <th class="py-4 px-6 font-medium text-center">NAV/delta from mkt</th>
+              <th class="py-4 px-6 font-medium text-right flex items-center gap-1 justify-end">
+                Today's volume <span class="text-[10px]">⌄</span>
+              </th>
+              <th class="py-4 px-6 font-medium text-center flex items-center gap-1 justify-center">
+                1Y returns <span class="text-[10px]">⌄</span>
+              </th>
+              <th class="py-4 px-6 font-medium text-center flex items-center gap-1 justify-center">
+                Expense ratio <span class="text-[10px]">⇕</span>
+              </th>
+              <th class="py-4 px-6 font-medium text-right">AUM</th>
+              <th class="py-4 px-6 font-medium text-center flex items-center gap-1 justify-center">
+                Tracking error <span class="text-gray-400">ℹ️</span>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody class="divide-y divide-gray-100">
+            <tr *ngFor="let etf of etfs" class="group hover:bg-gray-50 transition-colors relative">
+              <td class="py-4 px-6 min-w-70">
+                <div class="flex items-center gap-3">
+                  <div
+                    class="w-8 h-8 rounded border border-gray-100 flex items-center justify-center p-0.5 bg-white shadow-sm shrink-0"
+                  >
+                    <img [src]="etf.logo" [alt]="etf.name" class="w-full h-full object-contain" />
+                  </div>
+                  <span
+                    class="font-medium text-[14px] text-[#44475b] truncate max-w-60"
+                    title="{{ etf.name }}"
+                    >{{ etf.name }}</span
+                  >
+                </div>
+              </td>
+
+              <td class="py-4 px-2 w-24">
+                <div class="w-20">
+                  <svg
+                    *ngIf="etf.isUp"
+                    viewBox="0 0 100 24"
+                    class="w-full stroke-[#00d09c] fill-none"
+                    stroke-width="1.5"
+                  >
+                    <path d="M0,20 Q15,15 30,18 T60,10 T80,5 T100,2" />
+                    <line
+                      x1="0"
+                      y1="23"
+                      x2="100"
+                      y2="23"
+                      stroke="#e5e7eb"
+                      stroke-width="1"
+                      stroke-dasharray="2,2"
+                    />
+                  </svg>
+                  <svg
+                    *ngIf="!etf.isUp"
+                    viewBox="0 0 100 24"
+                    class="w-full stroke-[#eb5b3c] fill-none"
+                    stroke-width="1.5"
+                  >
+                    <path d="M0,2 Q20,5 40,15 T70,10 T85,18 T100,22" />
+                    <line
+                      x1="0"
+                      y1="23"
+                      x2="100"
+                      y2="23"
+                      stroke="#e5e7eb"
+                      stroke-width="1"
+                      stroke-dasharray="2,2"
+                    />
+                  </svg>
+                </div>
+              </td>
+
+              <td class="py-4 px-6 text-right font-medium text-[14px] text-[#44475b]">
+                {{ etf.price }}
+              </td>
+
+              <td
+                class="py-4 px-6 text-center text-[13px]"
+                [ngClass]="etf.isUp ? 'text-[#00d09c]' : 'text-[#eb5b3c]'"
+              >
+                {{ etf.change }} ({{ etf.changePercent }})
+              </td>
+
+              <td class="py-4 px-6 text-center">
+                <div class="text-[14px] font-medium text-[#44475b]">{{ etf.nav }}</div>
+                <div
+                  class="text-[12px]"
+                  [ngClass]="etf.navIsUp ? 'text-[#00d09c]' : 'text-[#eb5b3c]'"
+                >
+                  {{ etf.navDelta }}
+                </div>
+              </td>
+
+              <td class="py-4 px-6 text-right text-[14px] text-[#44475b]">
+                {{ etf.volume }}
+              </td>
+
+              <td
+                class="py-4 px-6 text-center font-medium text-[14px]"
+                [ngClass]="etf.returnIsUp ? 'text-[#00d09c]' : 'text-[#eb5b3c]'"
+              >
+                {{ etf.oneYearReturn }}
+              </td>
+
+              <td class="py-4 px-6 text-center text-[14px] text-[#44475b]">
+                {{ etf.expenseRatio }}
+              </td>
+
+              <td class="py-4 px-6 text-right text-[14px] text-[#44475b]">
+                {{ etf.aum }}
+              </td>
+
+              <td class="py-4 px-6 text-center text-[14px] text-[#44475b] relative">
+                {{ etf.trackingError }}
+
+                <div
+                  class="absolute inset-y-0 right-4 flex items-center justify-end gap-2 bg-gray-50 opacity-0 group-hover:opacity-100 transition-opacity pl-8 pr-2 pointer-events-none group-hover:pointer-events-auto"
+                  style="background: linear-gradient(to right, transparent, #f9fafb 20%)"
+                >
+                  <button
+                    class="border border-gray-300 bg-white text-gray-600 text-[12px] font-medium rounded-sm px-3 py-1.5 shadow-sm hover:border-gray-400"
+                  >
+                    SIP
+                  </button>
+                  <button
+                    class="bg-[#00d09c] text-white text-[12px] font-medium rounded-sm w-8 h-8 flex items-center justify-center shadow-sm hover:bg-[#00b889]"
+                  >
+                    B
+                  </button>
+                  <button
+                    class="bg-[#eb5b3c] text-white text-[12px] font-medium rounded-sm w-8 h-8 flex items-center justify-center shadow-sm hover:bg-[#d95133]"
+                  >
+                    S
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="bg-white p-6 rounded-xl border border-gray-200 shadow-sm font-sans text-[#44475b] w-200">
+  <h2 class="text-xl font-semibold mb-6">ETFs By Groww</h2>
+
+  <div class="space-y-4">
+    <div
+      class="grid grid-cols-12 text-[13px] text-gray-500 font-medium mb-2 pb-2 border-b border-gray-100"
+    >
+      <div class="col-span-6">ETF</div>
+      <div class="col-span-3"></div>
+      <div class="col-span-3 text-right">MARKET PRICE</div>
+    </div>
+
+    <div
+      *ngFor="let etf of etfs"
+      class="grid grid-cols-12 items-center gap-4 hover:bg-gray-50 p-2 -mx-2 rounded-lg transition-colors"
+    >
+      <div class="col-span-6 font-medium text-[14px]">{{ etf.name }}</div>
+
+      <div class="col-span-3">
+        <div class="w-24">
+          <svg
+            viewBox="0 0 100 24"
+            [attr.stroke]="etf.isUp ? '#00d09c' : '#eb5b3c'"
+            fill="none"
+            stroke-width="1.5"
+          >
+            <path [attr.d]="etf.isUp ? 'M0,20 Q20,10 50,15 T100,5' : 'M0,5 Q20,15 50,10 T100,20'" />
+            <line
+              x1="0"
+              y1="23"
+              x2="100"
+              y2="23"
+              stroke="#e5e7eb"
+              stroke-width="1"
+              stroke-dasharray="2,2"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <div class="col-span-3 text-right">
+        <div class="font-medium text-[14px]">{{ etf.price }}</div>
+        <div class="text-[13px]" [ngClass]="etf.isUp ? 'text-[#00d09c]' : 'text-[#eb5b3c]'">
+          {{ etf.change }} ({{ etf.changePercent }})
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

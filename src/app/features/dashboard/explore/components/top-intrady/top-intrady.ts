@@ -1,6 +1,7 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { AppServices } from '../../../../../services/app/app-services';
+import { RouterLink } from '@angular/router';
 
 interface Stock {
   name: string;
@@ -13,7 +14,7 @@ interface Stock {
 
 @Component({
   selector: 'app-top-intrady',
-  imports: [CommonModule, CurrencyPipe],
+  imports: [CommonModule, CurrencyPipe, RouterLink],
   templateUrl: './top-intrady.html',
   styleUrl: './top-intrady.css',
 })

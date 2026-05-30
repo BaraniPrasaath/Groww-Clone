@@ -47,4 +47,8 @@ export class AppServices {
   getStockNews(){
     return this.http.get<NewsFeedResponse>('https://groww.in/v2/api/feed/public?page=0&publisherId=stocknewssummary&size=4')
   }
+
+  getMostBoughtStocksGroww(){
+    return this.http.post('https://groww.in/v1/api/stocks_data/v1/tr_live_delayed/segment/CASH/latest_aggregated','');
+  }
 }

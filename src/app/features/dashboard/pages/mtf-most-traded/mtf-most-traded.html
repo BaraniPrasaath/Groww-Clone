@@ -1,0 +1,44 @@
+<div class="p-6 bg-white border border-gray-200 rounded-lg shadow-sm w-230">
+  <h2 class="text-xl font-semibold text-[#44475b] mb-6">Most traded stocks in MTF</h2>
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm text-left">
+      <thead class="text-gray-500 uppercase">
+        <tr>
+          <th class="py-4 px-2">Company</th>
+          <th class="py-4 px-2"></th>
+          <th class="py-4 px-2">Market Price</th>
+          <th class="py-4 px-2">Haircut</th>
+          <th class="py-4 px-2">1 Day Low</th>
+          <th class="py-4 px-2">1 Day High</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-gray-100">
+        <tr *ngFor="let stock of stocks; let i = index" [ngClass]="{ 'bg-[#f0fdf9]': i === 0 }">
+          <td class="py-5 px-2 font-medium text-[#44475b]">{{ stock.name }}</td>
+          <td class="py-5 px-2">
+            <div class="w-20 h-8">
+              <svg
+                viewBox="0 0 100 30"
+                [attr.stroke]="stock.isUp ? '#00d09c' : '#eb5b3c'"
+                fill="none"
+                stroke-width="2"
+              >
+                <path d="M0,15 C20,10 40,20 60,10 T100,20" />
+              </svg>
+            </div>
+          </td>
+          <td class="py-5 px-2">
+            <div class="font-medium text-[#44475b]">{{ stock.price }}</div>
+            <div [ngClass]="stock.isUp ? 'text-[#00d09c]' : 'text-[#eb5b3c]'">
+              {{ stock.change }}({{ stock.changePercent }})
+            </div>
+          </td>
+          <td class="py-5 px-2 text-[#44475b]">{{ stock.haircut }}</td>
+          <td class="py-5 px-2 text-[#44475b]">{{ stock.low }}</td>
+          <td class="py-5 px-2 text-[#44475b]">{{ stock.high }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

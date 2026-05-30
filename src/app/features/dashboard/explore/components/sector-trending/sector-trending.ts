@@ -1,7 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { AppServices } from '../../../../../services/app/app-services';
-import { TrendingSectorsData, TrendingSectorsResponse } from '../../../../../../models/TrendingSectorsResponse';
+import {
+  TrendingSectorsData,
+  TrendingSectorsResponse,
+} from '../../../../../../models/TrendingSectorsResponse';
+import { RouterLink } from '@angular/router';
 
 interface Sector {
   name: string;
@@ -14,17 +18,17 @@ interface Sector {
 
 @Component({
   selector: 'app-sector-trending',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './sector-trending.html',
   styleUrl: './sector-trending.css',
 })
-export class SectorTrending implements OnInit{
-  sectors = signal<Sector[]>([])
+export class SectorTrending implements OnInit {
+  sectors = signal<Sector[]>([]);
 
-  constructor(private appSer: AppServices){
-    effect(()=>{
-      console.log(this.sectors())
-    })
+  constructor(private appSer: AppServices) {
+    effect(() => {
+      console.log(this.sectors());
+    });
   }
 
   // Helper methods to calculate the dynamic width of the progress bars
@@ -40,9 +44,9 @@ export class SectorTrending implements OnInit{
 
   ngOnInit(): void {
     this.appSer.getTrendingSectors().subscribe({
-      next:(res:TrendingSectorsResponse)=>{
-        console.log("Trending sectors: ",res);
-        res.data.sectors.forEach((sector)=>{
+      next: (res: TrendingSectorsResponse) => {
+        console.log('Trending sectors: ', res);
+        res.data.sectors.forEach((sector) => {
           const dataArr = {
             name: '',
             icon: '',
@@ -50,17 +54,19 @@ export class SectorTrending implements OnInit{
             losers: 0,
             priceChange: '',
             isPositive: false,
-          }
+          };
           dataArr.name = sector.sectorName;
           dataArr.icon = sector.sectorLogo;
           dataArr.gainers = sector.positiveStocks;
           dataArr.losers = sector.negativeStocks;
-          dataArr.priceChange = sector.dayChangePercent.toFixed(2)+'%';
+          dataArr.priceChange = sector.dayChangePercent.toFixed(2) + '%';
           dataArr.isPositive = sector.dayChangePercent > 0 ? true : false;
-          dataArr.priceChange = dataArr.isPositive ? '+' + dataArr.priceChange : dataArr.priceChange;
-          this.sectors.update((data)=>[...data, dataArr]);
-        })
-      }
-    })
+          dataArr.priceChange = dataArr.isPositive
+            ? '+' + dataArr.priceChange
+            : dataArr.priceChange;
+          this.sectors.update((data) => [...data, dataArr]);
+        });
+      },
+    });
   }
 }

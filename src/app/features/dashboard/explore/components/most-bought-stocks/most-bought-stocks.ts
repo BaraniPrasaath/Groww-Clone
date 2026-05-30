@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 interface Stock {
   name: string;
@@ -11,7 +12,7 @@ interface Stock {
 
 @Component({
   selector: 'app-most-bought-stocks',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './most-bought-stocks.html',
   styleUrl: './most-bought-stocks.css',
 })

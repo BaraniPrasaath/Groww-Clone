@@ -3,6 +3,7 @@ import { Component, effect, OnInit, signal } from '@angular/core';
 import { AppServices } from '../../../../../services/app/app-services';
 import { NewsFeedResponse } from '../../../../../../models/NewsFeedResponse';
 import { TimeAgoPipePipe } from '../../../../../shared/pipes/time-ago-pipe-pipe';
+import { RouterLink } from '@angular/router';
 
 interface NewsStock {
   name: string;
@@ -16,7 +17,7 @@ interface NewsStock {
 @Component({
   selector: 'app-stock-news',
   standalone: true,
-  imports: [CommonModule, TimeAgoPipePipe],
+  imports: [CommonModule, TimeAgoPipePipe, RouterLink],
   templateUrl: './stock-news.html',
   styleUrl: './stock-news.css',
 })
