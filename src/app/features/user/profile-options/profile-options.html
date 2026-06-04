@@ -1,0 +1,192 @@
+<div
+  class="absolute z-100 right-10 w-87.5 bg-white border border-gray-200 rounded-xl shadow-lg font-sans flex flex-col overflow-hidden"
+>
+  <div
+    class="px-5 py-4 border-b border-gray-100 hover:bg-gray-50/50 transition-colors cursor-pointer group"
+  >
+    <div class="flex items-start justify-between gap-3">
+      <div class="flex flex-col overflow-hidden">
+        <h3 class="text-[#44475b] text-[15.5px] font-semibold">
+          {{ userName }}
+        </h3>
+        <p class="text-[#7b7e8c] text-[13.5px] font-normal mt-1 truncate">
+          {{ userEmail }}
+        </p>
+      </div>
+      <button
+        class="text-gray-400 group-hover:text-gray-600 transition-colors mt-0.5 focus:outline-none shrink-0"
+      >
+        <svg
+          class="w-4.5 h-4.5 cursor-pointer"
+          (click)="onCick('profile')"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+          />
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <div
+    class="px-5 py-3.5 border-b border-gray-100 hover:bg-gray-50/70 transition-colors cursor-pointer flex items-center justify-between group"
+    (click)="onCick('balance')"
+  >
+    <div class="flex items-start gap-4">
+      <svg
+        class="w-5 h-5 text-[#44475b] mt-0.5 opacity-80"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+        />
+      </svg>
+      <div class="flex flex-col">
+        <span class="text-[#44475b] text-[15px] font-semibold">{{ walletBalance }}</span>
+        <span class="text-[#7b7e8c] text-[13px]">{{ walletSubtitle }}</span>
+      </div>
+    </div>
+    <svg
+      class="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2.5"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+  </div>
+
+  <div
+    class="px-5 py-4 border-b border-gray-100 hover:bg-gray-50/70 transition-colors cursor-pointer flex items-center justify-between group"
+    (click)="onCick('orders')"
+  >
+    <div class="flex items-center gap-4">
+      <svg
+        class="w-5 h-5 text-[#44475b] opacity-80"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
+        />
+      </svg>
+      <span class="text-[#44475b] text-[15px] font-medium">All Orders</span>
+    </div>
+    <svg
+      class="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2.5"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+  </div>
+
+  <div
+    class="px-5 py-4 border-b border-gray-100 hover:bg-gray-50/70 transition-colors cursor-pointer flex items-center justify-between group"
+    (click)="onCick('help')"
+  >
+    <div class="flex items-center gap-4">
+      <svg
+        class="w-5 h-5 text-[#44475b] opacity-80"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z"
+        />
+      </svg>
+      <span class="text-[#44475b] text-[15px] font-medium">24 x 7 Customer Support</span>
+    </div>
+    <svg
+      class="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2.5"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+  </div>
+
+  <div
+    class="px-5 py-4 border-b border-gray-100 hover:bg-gray-50/70 transition-colors cursor-pointer flex items-center justify-between group"
+    (click)="onCick('reports')"
+  >
+    <div class="flex items-center gap-4">
+      <svg
+        class="w-5 h-5 text-[#44475b] opacity-80"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+        />
+      </svg>
+      <span class="text-[#44475b] text-[15px] font-medium">Reports</span>
+    </div>
+    <svg
+      class="w-4 h-4 text-gray-400 group-hover:text-gray-600 transition-colors"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2.5"
+    >
+      <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+    </svg>
+  </div>
+
+  <div
+    class="px-5 py-4 bg-white hover:bg-gray-50/50 transition-colors flex items-center justify-between"
+  >
+    <button
+      class="text-[#44475b] opacity-80 hover:opacity-100 transition-opacity focus:outline-none"
+      (click)="onCick('theme')"
+    >
+      <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"
+        />
+      </svg>
+    </button>
+
+    <button
+      class="text-[#44475b] text-[14.5px] font-semibold border-b border-dashed border-[#44475b] pb-0.5 hover:text-black hover:border-black transition-colors focus:outline-none"
+      (click)="onCick('logout')"
+    >
+      Log out
+    </button>
+  </div>
+</div>

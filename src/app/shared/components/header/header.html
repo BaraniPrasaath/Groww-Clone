@@ -30,13 +30,11 @@
       </div>
       <div class="flex justify-center items-center mx-1 gap-10">
         <i class="fa-regular fa-bell text-xl text-black"></i>
-        <img
-          [src]="profile()"
-          alt=""
-          class="h-8 w-8 rounded-full"
-          routerLink="/user/profile/basic-details"
-        />
+        <img [src]="profile()" alt="" class="h-8 w-8 rounded-full" (click)="onProfileClick()" />
       </div>
     </div>
+  </div>
+  <div>
+    <ng-container #popUp></ng-container>
   </div>
 </div>

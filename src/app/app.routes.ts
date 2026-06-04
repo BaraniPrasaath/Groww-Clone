@@ -13,7 +13,7 @@ import { MainComponent } from './features/dashboard/explore/main-component/main-
 import { FloatingHeader } from './shared/components/floating-header/floating-header';
 import { MostBoughtStocksOnGroww } from './features/dashboard/explore/pages/most-bought-stocks-on-groww/most-bought-stocks-on-groww';
 import { ContainerComponent } from './features/dashboard/explore/pages/container-component/container-component';
-import { ContainerComponentUser } from './features/user/container-component-user/container-component-user';
+import { ContainerComponentUser } from './features/user/profile/container-component-user/container-component-user';
 import { MtfMostTraded } from './features/dashboard/explore/pages/mtf-most-traded/mtf-most-traded';
 import { IntradayStocksScreener } from './features/dashboard/explore/pages/intraday-stocks-screener/intraday-stocks-screener';
 import { SectorsTrending } from './features/dashboard/explore/pages/sectors-trending/sectors-trending';
@@ -28,18 +28,18 @@ import { Orders } from './features/dashboard/orders/orders';
 import { Watchlist } from './features/dashboard/watchlist/watchlist';
 import { Connection } from './features/dashboard/explore/connection/connection';
 import { ContainerComponentWithout } from './features/dashboard/explore/pages/container-component-without/container-component-without';
-import { BasicDetails } from './features/user/components/basic-details/basic-details';
-import { Reports } from './features/user/components/reports/reports';
-import { ChangePassword } from './features/user/components/change-password/change-password';
-import { ChangeGrowwPin } from './features/user/components/change-groww-pin/change-groww-pin';
-import { TradingControlls } from './features/user/components/trading-controlls/trading-controlls';
-import { TradingApis } from './features/user/components/trading-apis/trading-apis';
-import { SellAuthorizationMode } from './features/user/components/sell-authorization-mode/sell-authorization-mode';
-import { TradingDetails } from './features/user/components/trading-details/trading-details';
-import { AccountRelatedForms } from './features/user/components/account-related-forms/account-related-forms';
-import { NomineeDetails } from './features/user/components/nominee-details/nominee-details';
-import { ActiveDevices } from './features/user/components/active-devices/active-devices';
-import { ReportSuspeciousActivity } from './features/user/components/report-suspecious-activity/report-suspecious-activity';
+import { BasicDetails } from './features/user/profile/components/basic-details/basic-details';
+import { Reports } from './features/user/profile/components/reports/reports';
+import { ChangePassword } from './features/user/profile/components/change-password/change-password';
+import { ChangeGrowwPin } from './features/user/profile/components/change-groww-pin/change-groww-pin';
+import { TradingControlls } from './features/user/profile/components/trading-controlls/trading-controlls';
+import { TradingApis } from './features/user/profile/components/trading-apis/trading-apis';
+import { SellAuthorizationMode } from './features/user/profile/components/sell-authorization-mode/sell-authorization-mode';
+import { TradingDetails } from './features/user/profile/components/trading-details/trading-details';
+import { AccountRelatedForms } from './features/user/profile/components/account-related-forms/account-related-forms';
+import { NomineeDetails } from './features/user/profile/components/nominee-details/nominee-details';
+import { ActiveDevices } from './features/user/profile/components/active-devices/active-devices';
+import { ReportSuspeciousActivity } from './features/user/profile/components/report-suspecious-activity/report-suspecious-activity';
 
 export const routes: Routes = [
   {
