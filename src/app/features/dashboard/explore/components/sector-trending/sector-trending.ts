@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
-import { AppServices } from '../../../../../services/app/app-services';
+import { AppServices } from '../../../../../core/services/app/app-services';
 import {
   TrendingSectorsData,
   TrendingSectorsResponse,
@@ -43,7 +43,7 @@ export class SectorTrending implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appSer.getTrendingSectors().subscribe({
+    this.appSer.getTrendingSectors(6).subscribe({
       next: (res: TrendingSectorsResponse) => {
         console.log('Trending sectors: ', res);
         res.data.sectors.forEach((sector) => {

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, signal } from '@angular/core';
-import { WelcomeService } from '../../../services/welcome-service';
+import { WelcomeService } from '../../../core/services/welcome-service';
 import { price2show } from '../../../../models/price2show';
 import { commodityDetails } from '../../../../models/MarketPrice';
 import { RouterLink } from '@angular/router';

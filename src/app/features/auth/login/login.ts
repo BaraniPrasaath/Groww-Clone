@@ -1,14 +1,14 @@
 import { AfterViewInit, Component, OnDestroy, signal } from '@angular/core';
 
 import { Router, RouterLink } from '@angular/router';
-import { AuthService } from '../../../services/auth-service';
+import { AuthService } from '../../../core/services/auth-service';
 import {
   authModel,
   fullData,
   returnLoginModel,
   userLoginModel,
 } from '../../../../models/auth-data-model';
-import { SharedDataService } from '../../../services/shared-data-service';
+import { SharedDataService } from '../../../core/services/shared-data-service';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 

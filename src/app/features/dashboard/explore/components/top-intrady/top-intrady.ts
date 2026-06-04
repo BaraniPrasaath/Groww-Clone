@@ -1,6 +1,6 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
-import { AppServices } from '../../../../../services/app/app-services';
+import { AppServices } from '../../../../../core/services/app/app-services';
 import { RouterLink } from '@angular/router';
 
 interface Stock {
@@ -28,7 +28,7 @@ export class TopIntrady implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appSer.getTopIntrady().subscribe({
+    this.appSer.getTopIntrady(4).subscribe({
       next: (res) => {
         console.log('Top Intrady response: ', res);
         res.exploreCompanies.POPULAR_STOCKS_INTRADAY_VOLUME.forEach((data) => {

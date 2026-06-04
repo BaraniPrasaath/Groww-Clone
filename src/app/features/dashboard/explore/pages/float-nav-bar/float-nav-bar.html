@@ -1,0 +1,52 @@
+<nav
+  class="relative bg-white/70 backdrop-blur-lg flex items-center justify-between px-6 py-3 border-b border-gray-100 font-sans w-full"
+>
+  <div class="flex items-center gap-8 z-10">
+    <a class="shrink-0">
+      <img [src]="logoUrl" alt="Groww Logo" class="h-9 w-9 object-contain" />
+    </a>
+
+    <div class="hidden md:flex items-center gap-7">
+      <a class="text-[17px] font-semibold text-[#44475b] tracking-wide"> Stocks </a>
+
+      @for (link of navLinks; track link.label) {
+        <a
+          class="text-[16px] font-medium text-[#7b7e8c] hover:text-[#44475b] transition-colors tracking-wide cursor-pointer"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </div>
+  </div>
+
+  <div class="flex items-center gap-5 z-10">
+    <button
+      class="hidden lg:flex items-center gap-2 px-3 py-1.5 bg-white/60 border border-gray-200 rounded-md hover:bg-white transition-colors"
+    >
+      <i class="fa-solid fa-sliders rotate-90 text-gray-600 text-xs"></i>
+      <span class="text-[14px] font-medium text-[#44475b]">Terminal</span>
+    </button>
+
+    <div
+      class="hidden lg:flex items-center justify-center px-2.5 py-1.5 bg-white/60 border border-gray-200 rounded-md"
+    >
+      <span class="text-[14px] font-semibold italic text-[#44475b]">915</span>
+    </div>
+
+    <button class="text-[#44475b] hover:text-gray-900 transition-colors p-1">
+      <i class="fa-solid fa-magnifying-glass text-gray-500 text-lg"></i>
+    </button>
+
+    <button class="text-[#44475b] hover:text-gray-900 transition-colors relative shrink-0 p-1">
+      <i class="fa-regular fa-bell text-xl text-gray-600"></i>
+    </button>
+
+    <button class="shrink-0 ml-1">
+      <img
+        [src]="profile()"
+        alt="User Profile"
+        class="h-9 w-9 rounded-full object-cover border border-gray-100"
+      />
+    </button>
+  </div>
+</nav>

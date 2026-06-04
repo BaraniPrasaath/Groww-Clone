@@ -1,0 +1,24 @@
+<section class="w-full bg-white py-25">
+  <div class="max-w-4xl mx-auto px-6 flex items-center justify-center gap-16">
+    <!-- Left: Illustration -->
+    <div class="shrink-0">
+      <img [src]="imageUrl" alt="No open orders" class="w-75 object-contain" />
+    </div>
+
+    <!-- Right: Text Content -->
+    <div class="flex flex-col">
+      <h2 class="text-[28px] font-bold text-[#44475b] leading-tight mb-4">
+        You have no open <br />
+        orders
+      </h2>
+
+      <a
+        routerLink="/user/order"
+        class="flex items-center gap-1 text-[#00d09c] font-semibold text-[15px] hover:underline w-fit"
+      >
+        All Orders
+        <span class="text-[18px]">›</span>
+      </a>
+    </div>
+  </div>
+</section>

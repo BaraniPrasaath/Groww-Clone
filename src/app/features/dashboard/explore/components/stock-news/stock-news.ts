@@ -1,6 +1,6 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
-import { AppServices } from '../../../../../services/app/app-services';
+import { AppServices } from '../../../../../core/services/app/app-services';
 import { NewsFeedResponse } from '../../../../../../models/NewsFeedResponse';
 import { TimeAgoPipePipe } from '../../../../../shared/pipes/time-ago-pipe-pipe';
 import { RouterLink } from '@angular/router';
@@ -31,23 +31,25 @@ export class StockNews implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appSer.getStockNews().subscribe({
+    this.appSer.getStockNews(4).subscribe({
       next: (res: NewsFeedResponse) => {
         // Map the feed data to the local NewsStock interface
         const formattedNews: NewsStock[] = res.feed.map((post) => {
           // Get the first CTA to extract logo and stock info
           const cta = post.data.cta[0];
-          
+
           return {
             name: cta?.ctaText || 'Unknown Stock',
             logo: cta?.logoUrl || '',
-            change: post.data.title,
+            change: '0.00%',
             snippet: post.data.body,
             time: post.publishedAt,
-            // Logic: You can determine isPositive based on your specific requirements 
+            // Logic: You can determine isPositive based on your specific requirements
             // or by checking the title/body keywords
-            isPositive: post.data.title.toLowerCase().includes('profit') || 
-                        post.data.title.toLowerCase().includes('jump')
+            isPositive:
+              // post.data.title.toLowerCase().includes('profit') ||
+              // post.data.title.toLowerCase().includes('jump'),
+              true,
           };
         });
 
@@ -55,7 +57,7 @@ export class StockNews implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching stock news:', err);
-      }
+      },
     });
   }
 }

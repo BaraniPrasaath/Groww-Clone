@@ -1,0 +1,75 @@
+<div class="max-w-200 p-4 font-sans ml-4">
+  <h2 class="text-[22px] font-medium text-slate-800 mb-5 tracking-tight ml-4">
+    {{ activeTabLabel() }} today
+  </h2>
+  <div class="flex">
+    <div
+      class="flex items-center gap-3 px-2 mx-2 relative z-10 overflow-x-auto no-scrollbar pb-1 border-r pr-2 border-r-olive-400 w-230"
+    >
+      @for (link of navLinks; track link.path) {
+        <a
+          [routerLink]="link.path"
+          routerLinkActive="active-tab"
+          [routerLinkActiveOptions]="{ exact: true }"
+          [queryParams]="{ index: selectedIndex() }"
+          queryParamsHandling="merge"
+          class="shrink-0 whitespace-nowrap px-5 py-2 rounded-full border border-[#e8e9eb] bg-white text-[#44475b] text-sm font-medium hover:border-[#44475b] transition-all duration-200 cursor-pointer text-center"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </div>
+    <div class="relative inline-block ml-auto shrink-0">
+      <button
+        (click)="toggleDropdown()"
+        [ngClass]="isDropdownOpen() ? 'border-[#44475b] bg-gray-50' : 'border-[#e8e9eb] bg-white'"
+        class="px-5 py-2 rounded-full border text-[#44475b] text-sm font-medium flex items-center gap-2 hover:border-[#44475b] transition-all duration-200 cursor-pointer shadow-sm"
+      >
+        {{ getSelectedIndexLabel() }}
+        <i
+          class="fa-solid transition-transform duration-200 text-xs text-gray-500"
+          [ngClass]="isDropdownOpen() ? 'fa-angle-up' : 'fa-angle-down'"
+        ></i>
+      </button>
+
+      @if (isDropdownOpen()) {
+        <div
+          class="absolute right-0 mt-2 w-65 bg-white border border-[#e8e9eb] rounded-2xl shadow-xl py-2 z-50 animate-fade-in"
+        >
+          @for (option of indexOptions; track option.value) {
+            <button
+              (click)="selectIndex(option.value)"
+              class="w-full px-5 py-3 text-left flex items-center gap-3 hover:bg-slate-50 transition-colors duration-150 group"
+            >
+              <div
+                [ngClass]="
+                  selectedIndex() === option.value
+                    ? 'border-[#00d09c]'
+                    : 'border-gray-300 group-hover:border-gray-400'
+                "
+                class="w-4.5 h-4.5 rounded-full border-2 flex items-center justify-center transition-all"
+              >
+                @if (selectedIndex() === option.value) {
+                  <div class="w-2 h-2 rounded-full bg-[#00d09c]"></div>
+                }
+              </div>
+
+              <span
+                [ngClass]="
+                  selectedIndex() === option.value
+                    ? 'text-slate-900 font-medium'
+                    : 'text-[#44475b] font-normal'
+                "
+                class="text-[14px]"
+              >
+                {{ option.label }}
+              </span>
+            </button>
+          }
+        </div>
+
+        <div class="fixed inset-0 z-40 bg-transparent" (click)="toggleDropdown()"></div>
+      }
+    </div>
+  </div>
+</div>

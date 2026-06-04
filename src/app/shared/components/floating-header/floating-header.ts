@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, HostListener, OnInit, signal } from '@angular/core';
 import { price2show } from '../../../../models/price2show';
-import { WelcomeService } from '../../../services/welcome-service';
-import { SharedDataService } from '../../../services/shared-data-service';
+import { WelcomeService } from '../../../core/services/welcome-service';
+import { SharedDataService } from '../../../core/services/shared-data-service';
 import { commodityDetails } from '../../../../models/MarketPrice';
 
 @Component({

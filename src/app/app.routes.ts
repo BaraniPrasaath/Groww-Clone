@@ -11,20 +11,22 @@ import { Register } from './features/auth/register/register';
 import { PinVerify } from './features/auth/pin-verify/pin-verify';
 import { MainComponent } from './features/dashboard/explore/main-component/main-component';
 import { FloatingHeader } from './shared/components/floating-header/floating-header';
-import { MostBoughtStocksOnGroww } from './features/dashboard/pages/most-bought-stocks-on-groww/most-bought-stocks-on-groww';
-import { ContainerComponent } from './features/dashboard/pages/container-component/container-component';
-import { TopGainers } from './features/dashboard/pages/TopMovers/top-gainers/top-gainers';
-import { TopLosers } from './features/dashboard/pages/TopMovers/top-losers/top-losers';
-import { VolumeShockers } from './features/dashboard/pages/TopMovers/volume-shockers/volume-shockers';
-import { TopVolume } from './features/dashboard/pages/TopMovers/top-volume/top-volume';
-import { FiveTwoWeekHigh } from './features/dashboard/pages/TopMovers/five-two-week-high/five-two-week-high';
-import { FiveTwoWeekLow } from './features/dashboard/pages/TopMovers/five-two-week-low/five-two-week-low';
-import { MtfMostTraded } from './features/dashboard/pages/mtf-most-traded/mtf-most-traded';
-import { IntradayStocksScreener } from './features/dashboard/pages/intraday-stocks-screener/intraday-stocks-screener';
-import { SectorsTrending } from './features/dashboard/pages/sectors-trending/sectors-trending';
-import { EtfScreener } from './features/dashboard/pages/etf-screener/etf-screener';
-import { EtfNfo } from './features/dashboard/pages/etf-nfo/etf-nfo';
-import { MarketNewsStocks } from './features/dashboard/pages/market-news-stocks/market-news-stocks';
+import { MostBoughtStocksOnGroww } from './features/dashboard/explore/pages/most-bought-stocks-on-groww/most-bought-stocks-on-groww';
+import { ContainerComponent } from './features/dashboard/explore/pages/container-component/container-component';
+import { MtfMostTraded } from './features/dashboard/explore/pages/mtf-most-traded/mtf-most-traded';
+import { IntradayStocksScreener } from './features/dashboard/explore/pages/intraday-stocks-screener/intraday-stocks-screener';
+import { SectorsTrending } from './features/dashboard/explore/pages/sectors-trending/sectors-trending';
+import { EtfScreener } from './features/dashboard/explore/pages/etf-screener/etf-screener';
+import { EtfNfo } from './features/dashboard/explore/pages/etf-nfo/etf-nfo';
+import { MarketNewsStocks } from './features/dashboard/explore/pages/market-news-stocks/market-news-stocks';
+import { ContainerComponentTopMovers } from './features/dashboard/explore/pages/container-component-top-movers/container-component-top-movers';
+import { TopMovers } from './features/dashboard/explore/pages/top-movers/top-movers';
+import { Holdings } from './features/dashboard/holdings/holdings';
+import { Position } from './features/dashboard/position/position';
+import { Orders } from './features/dashboard/orders/orders';
+import { Watchlist } from './features/dashboard/watchlist/watchlist';
+import { Connection } from './features/dashboard/explore/connection/connection';
+import { ContainerComponentWithout } from './features/dashboard/explore/pages/container-component-without/container-component-without';
 
 export const routes: Routes = [
   {
@@ -68,8 +70,30 @@ export const routes: Routes = [
     component: PinVerify,
   },
   {
-    path: 'explore',
+    path: 'user',
     component: MainComponent,
+    children: [
+      {
+        path: 'explore',
+        component: Connection,
+      },
+      {
+        path: 'holdings',
+        component: Holdings,
+      },
+      {
+        path: 'positions',
+        component: Position,
+      },
+      {
+        path: 'orders',
+        component: Orders,
+      },
+      {
+        path: 'watchlist',
+        component: Watchlist,
+      },
+    ],
   },
   {
     path: 'dummy',
@@ -77,32 +101,11 @@ export const routes: Routes = [
   },
   {
     path: 'markets',
-    component: ContainerComponent,
+    component: ContainerComponentTopMovers,
     children: [
       {
-        path: 'top-gainers',
-        component: TopGainers,
-      },
-      {
-        path: 'top-losers',
-        component: TopLosers,
-      },
-
-      {
-        path: 'volume-shockers',
-        component: VolumeShockers,
-      },
-      {
-        path: 'top-volume',
-        component: TopVolume,
-      },
-      {
-        path: '52-week-high',
-        component: FiveTwoWeekHigh,
-      },
-      {
-        path: '52-week-low',
-        component: FiveTwoWeekLow,
+        path: ':type',
+        component: TopMovers,
       },
     ],
   },
@@ -119,6 +122,16 @@ export const routes: Routes = [
         component: MtfMostTraded,
       },
       {
+        path: 'etf-nfo',
+        component: EtfNfo,
+      },
+    ],
+  },
+  {
+    path: 'stocks',
+    component: ContainerComponentWithout,
+    children: [
+      {
         path: 'intraday',
         component: IntradayStocksScreener,
       },
@@ -126,18 +139,26 @@ export const routes: Routes = [
         path: 'sectors-trending',
         component: SectorsTrending,
       },
-      {
-        path: 'etf-nfo',
-        component: EtfNfo,
-      },
     ],
   },
   {
     path: 'etf',
-    component: EtfScreener,
+    component: ContainerComponentWithout,
+    children: [
+      {
+        path: '',
+        component: EtfScreener,
+      },
+    ],
   },
   {
     path: 'market-news',
-    component: MarketNewsStocks,
+    component: ContainerComponentWithout,
+    children: [
+      {
+        path: 'stocks',
+        component: MarketNewsStocks,
+      },
+    ],
   },
 ];

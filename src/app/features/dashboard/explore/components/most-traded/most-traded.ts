@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
-import { AppServices } from '../../../../../services/app/app-services';
+import { AppServices } from '../../../../../core/services/app/app-services';
 import { RouterLink } from '@angular/router';
 
 interface Stock {
@@ -28,7 +28,7 @@ export class MostTraded implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appSer.getMostTraded().subscribe({
+    this.appSer.getMostTraded(4).subscribe({
       next: (res) => {
         console.log('Most traded response: ', res);
         res.exploreCompanies.POPULAR_STOCKS_MOST_BOUGHT_MTF.forEach((data) => {

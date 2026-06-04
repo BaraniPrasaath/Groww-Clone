@@ -1,6 +1,6 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
-import { AppServices } from '../../../../../services/app/app-services';
+import { AppServices } from '../../../../../core/services/app/app-services';
 import { ObservableNotification } from 'rxjs';
 import { ExploreCompanies } from '../../../../../../models/ExploreCompaniesResponse';
 import { ExploreCompaniesResponse_etf } from '../../../../../../models/ExploreCompaniesResponse_etf';
@@ -32,7 +32,7 @@ export class MostBoughtEtf implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appSer.getMostBroughtETF().subscribe({
+    this.appSer.getMostBroughtETF(4).subscribe({
       next: (res: ExploreCompaniesResponse_etf) => {
         console.log('Most brought eft: ', res);
         // Define the desired display order

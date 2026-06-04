@@ -1,6 +1,6 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
-import { AppServices } from '../../../../../services/app/app-services';
+import { AppServices } from '../../../../../core/services/app/app-services';
 import { RouterLink } from '@angular/router';
 
 // Ensure this interface matches the structure you want in your UI
@@ -31,7 +31,7 @@ export class EtfGrow implements OnInit {
   }
 
   ngOnInit(): void {
-    this.appSer.getETFbyGroww().subscribe({
+    this.appSer.getETFbyGroww(4).subscribe({
   next: (res) => {
     const rawCompanies = res.exploreCompanies['ETF_NFO'] || [];
 

@@ -1,13 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, effect, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AppServices } from '../../../../../core/services/app/app-services';
+import { mostBoughtStocks } from '../../../../../../models/mostBoughtStocks';
 
 interface Stock {
   name: string;
   logo: string;
   price: string;
   change: string;
-  percentage: string;
+  changePercent: string;
+  isPositive: boolean;
 }
 
 @Component({
@@ -16,35 +19,34 @@ interface Stock {
   templateUrl: './most-bought-stocks.html',
   styleUrl: './most-bought-stocks.css',
 })
-export class MostBoughtStocks {
-  stocks: Stock[] = [
-    {
-      name: 'Apollo Micro Systems',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/AMS_BANSAL1.webp',
-      price: '₹422.70',
-      change: '10.60',
-      percentage: '2.57%',
-    },
-    {
-      name: 'Adani Total Gas',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/ATGL.webp',
-      price: '₹780.90',
-      change: '67.80',
-      percentage: '9.51%',
-    },
-    {
-      name: 'Adani Power',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/ADANIPOWER.webp',
-      price: '₹249.72',
-      change: '5.19',
-      percentage: '2.12%',
-    },
-    {
-      name: 'ITC',
-      logo: 'https://assets-netstorage.groww.in/stock-assets/logos2/ITC_1.webp',
-      price: '₹293.80',
-      change: '0.15',
-      percentage: '0.05%',
-    },
-  ];
+export class MostBoughtStocks implements OnInit {
+  stocks = signal<Stock[]>([]);
+
+  constructor(private appSer: AppServices) {
+    effect(() => {
+      console.log(this.stocks());
+    });
+  }
+
+  ngOnInit(): void {
+    this.appSer.getMostBoughtStocksGroww(4).subscribe({
+      next: (res: mostBoughtStocks) => {
+        const rawStocks = res.exploreCompanies.POPULAR_STOCKS_MOST_BOUGHT;
+
+        const stockList: Stock[] = rawStocks.map((item) => ({
+          name: item.company.companyShortName,
+          logo: item.company.imageUrl,
+          price: `₹${item.stats.ltp.toFixed(2)}`,
+          change: item.stats.dayChange.toFixed(2),
+          changePercent: `${item.stats.dayChangePerc > 0 ? item.stats.dayChangePerc.toFixed(2) : (item.stats.dayChangePerc * -1).toFixed(2)}%`,
+          isPositive: item.stats.dayChange >= 0,
+        }));
+
+        this.stocks.set(stockList);
+      },
+      error: (err) => {
+        console.error('Error fetching most bought stocks:', err);
+      },
+    });
+  }
 }

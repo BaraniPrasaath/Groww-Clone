@@ -3,7 +3,7 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
     <div
-      *ngFor="let stock of stocks"
+      *ngFor="let stock of stocks()"
       class="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer bg-white"
     >
       <img
@@ -16,8 +16,11 @@
 
       <div class="font-medium text-gray-600 text-sm">{{ stock.price }}</div>
 
-      <div class="text-green-700 font-medium text-sm">
-        {{ stock.change }} ({{ stock.percentage }})
+      <div
+        [ngClass]="stock.isPositive ? 'text-green-600' : 'text-red-500'"
+        class="font-normal text-sm"
+      >
+        {{ stock.change }} ({{ stock.changePercent }})
       </div>
     </div>
   </div>

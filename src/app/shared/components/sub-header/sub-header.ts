@@ -1,9 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { price2show } from '../../../../models/price2show';
-import { WelcomeService } from '../../../services/welcome-service';
+import { WelcomeService } from '../../../core/services/welcome-service';
 import { commodityDetails } from '../../../../models/MarketPrice';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sub-header',
@@ -21,7 +21,10 @@ export class SubHeader {
 
   stockPrice = signal<price2show[]>([]);
 
-  constructor(private service: WelcomeService) {
+  constructor(
+    private service: WelcomeService,
+    private route: Router,
+  ) {
     service.getMarketData().subscribe(({ commodityMinimalDetailsResponses }) => {
       console.log(commodityMinimalDetailsResponses);
       commodityMinimalDetailsResponses.forEach((data: commodityDetails) => {
@@ -61,6 +64,22 @@ export class SubHeader {
 
   changeTab(index: number, item: string) {
     this.activeTab = index;
-    console.log(item);
+    console.log('[' + item + ']');
+
+    const routes: Record<string, string> = {
+      Holdings: '/user/holdings',
+      Explore: '/user/explore',
+      Positions: '/user/positions',
+      Orders: '/user/orders',
+      Watchlist: '/user/watchlist',
+    };
+
+    const route = routes[item.trim()];
+
+    console.log(item, route);
+
+    if (route) {
+      this.route.navigate([route]);
+    }
   }
 }

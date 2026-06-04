@@ -1,0 +1,51 @@
+<nav
+  class="flex items-center justify-between px-6 py-3 bg-white font-sans w-full"
+>
+  <div class="flex items-center gap-8">
+    <a class="shrink-0">
+      <img [src]="logoUrl" alt="Groww Logo" class="h-9 w-9 object-contain" />
+    </a>
+
+    <div class="hidden md:flex items-center gap-7">
+      <a class="text-[17px] font-semibold text-[#44475b] tracking-wide"> Stocks </a>
+
+      @for (link of navLinks; track link.label) {
+        <a
+          class="text-[16px] font-normal text-[#7b7e8c] hover:text-[#44475b] transition-colors tracking-wide cursor-pointer"
+        >
+          {{ link.label }}
+        </a>
+      }
+    </div>
+  </div>
+
+  <div class="flex items-center gap-6">
+    <div class="relative hidden lg:flex items-center group">
+      <i class="fa-solid fa-magnifying-glass absolute right-88 top-4.5 text-gray-500 text-sm"></i>
+
+      <input
+        type="text"
+        placeholder="Search Groww...."
+        class="w-95 py-2.5 pl-11 pr-16 bg-white border border-gray-200 rounded-md text-[15px] text-gray-700 outline-none focus:border-[#00d09c] focus:ring-1 focus:ring-[#00d09c] transition-all placeholder-gray-400"
+      />
+
+      <div
+        class="absolute right-3 flex items-center text-[12px] text-gray-400 font-medium tracking-wide"
+      >
+        Ctrl+K
+      </div>
+    </div>
+
+    <button class="text-[#44475b] hover:text-gray-900 transition-colors relative shrink-0">
+      <i class="fa-regular fa-bell text-xl text-gray-600"></i>
+    </button>
+
+    <button class="shrink-0">
+      <img
+        [src]="profile()"
+        alt="User Profile"
+        class="h-9 w-9 rounded-full object-cover border border-gray-100"
+      />
+    </button>
+  </div>
+</nav>

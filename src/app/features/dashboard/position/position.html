@@ -1,0 +1,72 @@
+<div>
+  <!-- Empty State -->
+  <section class="w-full bg-white py-20">
+    <div class="max-w-4xl mx-auto px-6 flex items-center justify-center gap-16">
+      <div class="shrink-0">
+        <img
+          src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/_next/static/media/stockEmptyDashboard.7c05e365.svg"
+          alt="No open orders"
+          class="w-75 object-contain"
+        />
+      </div>
+      <div>
+        <h2 class="text-[28px] font-bold text-[#44475b] leading-tight mb-4">
+          You have no open <br />
+          orders
+        </h2>
+        <p class="text-[#666]">
+          Equity Intraday and MTF positions will <br />
+          appear here
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Top Gainers -->
+  <section class="bg-white rounded-2xl p-8 mt-8">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-[20px] font-semibold text-[#44475b]">Top Gainers</h2>
+      <button class="text-[#00b386] font-semibold text-sm">See more</button>
+    </div>
+
+    <!-- Tabs -->
+    <div class="flex gap-4 mb-8">
+      <button
+        *ngFor="let tab of ['Large', 'Mid', 'Small']"
+        (click)="setActiveTab($any(tab))"
+        [class]="
+          activeTab() === tab
+            ? 'bg-[#e6f6f1] text-[#00b386] border-transparent'
+            : 'bg-white text-[#7c7e8c] border-[#e5e7eb]'
+        "
+        class="px-3 py-1 rounded-full border text-sm font-semibold transition-all"
+      >
+        {{ tab }}
+      </button>
+    </div>
+
+    <!-- Cards Grid -->
+    <div class="grid grid-cols-5 gap-6">
+      <div
+        *ngFor="let stock of displayedStocks()"
+        class="bg-white border border-[#e5e7eb] rounded-2xl p-3 h-50 flex flex-col"
+      >
+        <div class="w-14 h-14 border border-[#ececec] rounded-md flex items-center justify-center">
+          <img [src]="stock.logo" [alt]="stock.name" class="w-10 h-10 object-contain" />
+        </div>
+        <h3 class="mt-4 text-[14px] font-bold text-[#44475b] line-clamp-2 ml-1">
+          {{ stock.name }}
+        </h3>
+        <div class="mt-auto">
+          <p class="text-[17px] font-semibold text-[#44475b]">{{ stock.price }}</p>
+          <p
+            [class]="stock.up ? 'text-[#00b386]' : 'text-[#eb5757]'"
+            class="mt-2 text-[13px] font-semibold"
+          >
+            {{ stock.changeVal }} ({{ stock.change }})
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

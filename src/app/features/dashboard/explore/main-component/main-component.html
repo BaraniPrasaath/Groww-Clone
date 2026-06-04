@@ -8,31 +8,16 @@
   <app-floating-header></app-floating-header>
 </div>
 <div class="flex flex-col gap-4 bg-white min-h-screen max-w-screen">
-  
-  <div 
+  <div
     [class.opacity-0]="isSticky"
     [class.pointer-events-none]="isSticky"
-    class="transition-opacity duration-300 ease-in-out flex flex-col w-full">
+    class="transition-opacity duration-300 ease-in-out flex flex-col w-full"
+  >
     <div class="w-full"><app-header></app-header></div>
     <div class="w-full"><app-sub-header></app-sub-header></div>
   </div>
-
-  <div class="flex w-full mt-4"> <div class="flex-2">
-      <app-recently-viewed></app-recently-viewed>
-      <app-most-bought-stocks></app-most-bought-stocks>
-      <app-top-movers></app-top-movers>
-      <app-most-traded></app-most-traded>
-      <app-top-intrady></app-top-intrady>
-      <app-sector-trending></app-sector-trending>
-      <app-most-bought-etf></app-most-bought-etf>
-      <app-etf-grow></app-etf-grow>
-      <app-stock-news></app-stock-news>
-    </div>
-    <div class="flex-1">
-      <app-your-investments></app-your-investments>
-      <app-products-tools></app-products-tools>
-      <app-trading-screens></app-trading-screens>
-    </div>
+  <div>
+    <router-outlet />
   </div>
   <app-app-footer></app-app-footer>
 </div>

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { AuthService } from '../../../services/auth-service';
-import { SharedDataService } from '../../../services/shared-data-service';
+import { AuthService } from '../../../core/services/auth-service';
+import { SharedDataService } from '../../../core/services/shared-data-service';
 import { Router } from '@angular/router';
 
 @Component({
