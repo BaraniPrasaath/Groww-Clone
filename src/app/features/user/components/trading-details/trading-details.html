@@ -1,0 +1,77 @@
+<div class="max-w-4xl mx-auto space-y-6 p-6 font-sans">
+  <!-- Segments Card -->
+  <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+    <h2 class="text-lg font-semibold text-slate-800 mb-6">
+      These segments are enabled for your account
+    </h2>
+    <div class="grid grid-cols-1 gap-4">
+      <div *ngFor="let segment of segments" class="flex items-center gap-3">
+        <input
+          type="checkbox"
+          [checked]="segment.checked"
+          disabled
+          class="w-4 h-4 accent-[#00b087]"
+        />
+        <span class="text-slate-600 text-sm">{{ segment.name }}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trading Details Card -->
+  <div class="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+    <h2 class="text-lg font-semibold text-slate-800 mb-6">Trading Details</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-y-8 gap-x-4">
+      <!-- Detail Item Template -->
+      <ng-template #detailItem let-label="label" let-value="value">
+        <div class="flex flex-col gap-1">
+          <span class="text-xs text-slate-400 uppercase tracking-wide">{{ label }}</span>
+          <div class="flex items-center gap-2 text-slate-800">
+            <span>{{ value }}</span>
+            <button (click)="copyToClipboard(value)" class="text-[#00b087] hover:opacity-80">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="14"
+                height="14"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </ng-template>
+
+      <ng-container
+        *ngTemplateOutlet="detailItem; context: { label: 'Unique Client Code', value: details.ucc }"
+      ></ng-container>
+      <ng-container
+        *ngTemplateOutlet="
+          detailItem;
+          context: { label: 'Demat Acc Number / BOID', value: details.boid }
+        "
+      ></ng-container>
+      <ng-container
+        *ngTemplateOutlet="detailItem; context: { label: 'DP ID', value: details.dpId }"
+      ></ng-container>
+      <ng-container
+        *ngTemplateOutlet="
+          detailItem;
+          context: { label: 'Depository Participant', value: details.depositoryParticipant }
+        "
+      ></ng-container>
+      <ng-container
+        *ngTemplateOutlet="
+          detailItem;
+          context: { label: 'Depository Name', value: details.depositoryName }
+        "
+      ></ng-container>
+    </div>
+  </div>
+</div>

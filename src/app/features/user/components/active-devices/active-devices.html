@@ -1,0 +1,79 @@
+<div class="w-full max-w-4xl bg-white border border-gray-200 rounded-xl shadow-sm p-6 font-sans">
+  <div class="mb-6">
+    <h2 class="text-lg font-semibold text-slate-800 mb-2">Active devices</h2>
+    <p class="text-[13px] text-slate-400 leading-relaxed max-w-3xl">
+      You're currently logged-in on these devices. Multiple active sessions on the same device
+      indicates you've opened Groww on more than one browser.
+    </p>
+  </div>
+
+  <div class="mb-4">
+    <h3 class="text-sm text-slate-400 font-normal mb-3">Current device</h3>
+
+    <div class="flex items-center justify-between py-2">
+      <div class="flex items-center gap-4">
+        <div
+          class="w-12 h-12 rounded-full bg-slate-50 border border-gray-100 flex items-center justify-center shrink-0"
+        >
+          <img
+            src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/_next/static/media/platformDesktop.ae411d1b.svg"
+            alt="Desktop Icon"
+            class="w-10 h-10 object-contain"
+          />
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[15px] font-semibold text-slate-800">
+            {{ currentDevice.browser }}, {{ currentDevice.os }}
+          </span>
+          <span class="text-xs text-slate-400 font-normal">
+            {{ currentDevice.lastActive }}
+          </span>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        (click)="onLogout(currentDevice.id)"
+        class="text-sm font-medium text-[#00b087] hover:text-[#009672] transition-colors focus:outline-none"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+
+  <hr class="border-t border-gray-100 my-4" />
+
+  <div>
+    <h3 class="text-sm text-slate-400 font-normal mb-3">Active devices</h3>
+
+    <div *ngFor="let device of otherDevices" class="flex items-center justify-between py-2">
+      <div class="flex items-center gap-4">
+        <div
+          class="w-12 h-12 rounded-full bg-slate-50 border border-gray-100 flex items-center justify-center shrink-0"
+        >
+          <img
+            src="https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/_next/static/media/platformDesktop.ae411d1b.svg"
+            alt="Desktop Icon"
+            class="w-10 h-10 object-contain"
+          />
+        </div>
+        <div class="flex flex-col">
+          <span class="text-[15px] font-semibold text-slate-800">
+            {{ device.browser }}, {{ device.os }}
+          </span>
+          <span class="text-xs text-slate-400 font-normal">
+            {{ device.lastActive }}
+          </span>
+        </div>
+      </div>
+
+      <button
+        type="button"
+        (click)="onLogout(device.id)"
+        class="text-sm font-medium text-[#00b087] hover:text-[#009672] transition-colors focus:outline-none"
+      >
+        Logout
+      </button>
+    </div>
+  </div>
+</div>

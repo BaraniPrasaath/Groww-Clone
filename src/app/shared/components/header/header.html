@@ -16,7 +16,9 @@
     </div>
     <div class="flex gap-4 w-110 justify-between">
       <div class="flex">
-        <i class="fa-solid fa-magnifying-glass absolute right-110 top-6.5 text-gray-500 text-sm"></i>
+        <i
+          class="fa-solid fa-magnifying-glass absolute right-110 top-6.5 text-gray-500 text-sm"
+        ></i>
         <input
           type="text"
           placeholder="Search Groww...."
@@ -28,7 +30,12 @@
       </div>
       <div class="flex justify-center items-center mx-1 gap-10">
         <i class="fa-regular fa-bell text-xl text-black"></i>
-        <img [src]="profile()" alt="" class="h-8 w-8 rounded-full" />
+        <img
+          [src]="profile()"
+          alt=""
+          class="h-8 w-8 rounded-full"
+          routerLink="/user/profile/basic-details"
+        />
       </div>
     </div>
   </div>

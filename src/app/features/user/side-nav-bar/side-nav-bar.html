@@ -1,0 +1,36 @@
+<div
+  class="w-85 bg-white border border-gray-200 rounded-lg shadow-sm font-sans flex flex-col overflow-hidden"
+>
+  <div class="flex flex-col items-center pt-8 pb-6 px-4">
+    <img
+      [src]="profileUrl"
+      alt="Profile Picture"
+      class="h-21 w-21 rounded-full object-cover border border-gray-100 mb-4 shadow-sm"
+    />
+    <h2 class="text-[#44475b] text-[16px] font-semibold text-center leading-snug px-2">
+      {{ userName }}
+    </h2>
+  </div>
+
+  <div class="flex flex-col w-full pb-2">
+    @for (item of menuItems; track item.label; let i = $index) {
+      <button
+        class="flex items-center justify-between w-full px-6 py-3.75 text-[15px] text-[#44475b] transition-colors focus:outline-none"
+        (click)="onClick(i)"
+        [ngClass]="item.active ? 'bg-[#f1f2f2] font-medium' : 'hover:bg-gray-100'"
+      >
+        <span>{{ item.label }}</span>
+
+        <svg
+          class="h-3.5 w-3.5 text-gray-500"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2.5"
+        >
+          <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+    }
+  </div>
+</div>

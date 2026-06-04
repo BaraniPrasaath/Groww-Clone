@@ -4,14 +4,15 @@ import { price2show } from '../../../../models/price2show';
 import { WelcomeService } from '../../../core/services/welcome-service';
 import { SharedDataService } from '../../../core/services/shared-data-service';
 import { commodityDetails } from '../../../../models/MarketPrice';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-floating-header',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './floating-header.html',
   styleUrl: './floating-header.css',
 })
-export class FloatingHeader  implements OnInit {
+export class FloatingHeader implements OnInit {
   profile = signal(
     'https://assets-netstorage.groww.in/web-assets/billion_groww_desktop/prod/_next/static/media/profile.8692709f.png',
   );
@@ -25,7 +26,10 @@ export class FloatingHeader  implements OnInit {
 
   stockPrice = signal<price2show[]>([]);
 
-  constructor(private service: WelcomeService, private dataSer: SharedDataService) {
+  constructor(
+    private service: WelcomeService,
+    private dataSer: SharedDataService,
+  ) {
     service.getMarketData().subscribe(({ commodityMinimalDetailsResponses }) => {
       console.log(commodityMinimalDetailsResponses);
       commodityMinimalDetailsResponses.forEach((data: commodityDetails) => {
@@ -76,5 +80,3 @@ export class FloatingHeader  implements OnInit {
     console.log(item);
   }
 }
-
-

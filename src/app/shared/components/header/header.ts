@@ -1,9 +1,10 @@
 import { Component, OnInit, signal } from '@angular/core';
 import { SharedDataService } from '../../../core/services/shared-data-service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-header',
-  imports: [],
+  imports: [RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })

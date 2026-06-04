@@ -1,0 +1,110 @@
+<div class="max-w-4xl mx-auto w-full p-6 font-sans">
+  <!-- Page Title -->
+  <h1 class="text-xl font-semibold text-slate-800 mb-6">Sell authorisation</h1>
+
+  <!-- Top Card: TPIN / DDPI Status -->
+  <div class="bg-white border border-gray-200 rounded-xl mb-6 shadow-sm">
+    <div class="p-5">
+      <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-4">
+        <!-- Left Info -->
+        <div>
+          <div class="flex items-center gap-3 mb-1.5">
+            <h2 class="text-[16px] font-semibold text-slate-800">TPIN (eDIS)</h2>
+            <span
+              class="bg-[#e6f7f3] text-[#00b087] text-[10px] font-bold px-2 py-0.5 rounded tracking-wide"
+            >
+              ENABLED
+            </span>
+          </div>
+          <p class="text-sm text-slate-500">
+            It requires verification on CDSL to sell your holdings
+          </p>
+        </div>
+
+        <!-- Right Actions -->
+        <div class="flex items-center gap-3">
+          <button
+            type="button"
+            class="border border-gray-300 hover:bg-gray-50 text-slate-700 text-xs font-medium px-4 py-2 rounded-lg transition-colors"
+          >
+            Change T-PIN
+          </button>
+          <button
+            type="button"
+            class="bg-[#e6f7f3] hover:bg-[#d6f0ea] text-[#00b087] text-xs font-medium px-4 py-2 rounded-lg transition-colors"
+          >
+            Switch to DDPI
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <hr class="border-t border-dashed border-gray-200 mx-5" />
+
+    <!-- Footer Note -->
+    <div class="p-4 px-5 bg-white rounded-b-xl flex items-center gap-2">
+      <!-- Sparkle Icon -->
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="w-4 h-4 text-slate-600"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M9 4.5a.75.75 0 0 1 .721.544l.813 2.846a3.75 3.75 0 0 0 2.522 2.522l2.846.813a.75.75 0 0 1 0 1.45l-2.846.813a3.75 3.75 0 0 0-2.522 2.522l-.813 2.846a.75.75 0 0 1-1.442 0l-.813-2.846a3.75 3.75 0 0 0-2.522-2.522l-2.846-.813a.75.75 0 0 1 0-1.45l2.846-.813a3.75 3.75 0 0 0 2.522-2.522l.813-2.846A.75.75 0 0 1 9 4.5ZM18 1.5a.75.75 0 0 1 .728.568l.258 1.036c.236.94.97 1.674 1.91 1.91l1.036.258a.75.75 0 0 1 0 1.456l-1.036.258c-.94.236-1.674.97-1.91 1.91l-.258 1.036a.75.75 0 0 1-1.456 0l-.258-1.036a2.625 2.625 0 0 0-1.91-1.91l-1.036-.258a.75.75 0 0 1 0-1.456l1.036-.258a2.625 2.625 0 0 0 1.91-1.91l.258-1.036A.75.75 0 0 1 18 1.5ZM16.5 15a.75.75 0 0 1 .712.513l.394 1.183c.15.447.5.799.948.948l1.183.395a.75.75 0 0 1 0 1.422l-1.183.395c-.447.15-.799.5-.948.948l-.395 1.183a.75.75 0 0 1-1.422 0l-.395-1.183a1.5 1.5 0 0 0-.948-.948l-1.183-.395a.75.75 0 0 1 0-1.422l1.183-.395c.447-.15.799-.5.948-.948l.395-1.183A.75.75 0 0 1 16.5 15Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+      <span class="text-[13px] text-slate-500"
+        >Enabling DDPI is a faster way to capture sell price with one tap.</span
+      >
+    </div>
+  </div>
+
+  <!-- FAQs Card -->
+  <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-6">
+    <h2 class="text-[17px] font-semibold text-slate-800 mb-2">FAQs</h2>
+
+    <div class="flex flex-col">
+      <div *ngFor="let faq of faqs; let i = index; let last = last">
+        <!-- Accordion Button -->
+        <button
+          (click)="toggleFaq(i)"
+          class="w-full flex justify-between items-center py-4 text-left focus:outline-none group"
+        >
+          <span class="text-[14px] text-slate-700">{{ faq.question }}</span>
+
+          <!-- Animated Chevron -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="2"
+            stroke="currentColor"
+            class="w-4 h-4 text-slate-600 transition-transform duration-300"
+            [ngClass]="faq.isOpen ? 'rotate-180' : 'rotate-0'"
+          >
+            <path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+          </svg>
+        </button>
+
+        <!-- Accordion Content (Smooth Reveal using CSS Grid) -->
+        <div
+          class="grid transition-all duration-300 ease-in-out"
+          [ngClass]="faq.isOpen ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'"
+        >
+          <div class="overflow-hidden">
+            <p class="pb-5 text-[14px] text-slate-600 pr-8">
+              {{ faq.answer }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Separator Line (Hidden on the last item) -->
+        <hr *ngIf="!last" class="border-gray-100" />
+      </div>
+    </div>
+  </div>
+</div>

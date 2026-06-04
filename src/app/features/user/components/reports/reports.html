@@ -1,0 +1,151 @@
+<div class="max-w-280 mx-auto px-4 py-8 font-sans flex flex-col md:flex-row gap-6 items-start">
+  <div
+    class="w-full md:w-90 shrink-0 overflow-y-auto pr-1 flex-3 flex-col gap-4"
+  >
+    @for (cat of categories; track cat.title) {
+      <div
+        class="border border-gray-200 rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.02)] overflow-hidden shrink-0 mb-4"
+      >
+        <div class="flex items-center gap-2.5 px-4 py-3.5 border-b border-gray-100 bg-white">
+          @if (cat.iconType === 'pnl') {
+            <svg
+              class="w-5 h-5 text-[#00d09c]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M7 12l3-3 3 3 4-4M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+              />
+            </svg>
+          } @else if (cat.iconType === 'tax') {
+            <svg
+              class="w-5 h-5 text-[#00d09c]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+              />
+            </svg>
+          } @else if (cat.iconType === 'holdings') {
+            <svg
+              class="w-5 h-5 text-[#00d09c]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+              />
+            </svg>
+          } @else if (cat.iconType === 'transactions') {
+            <svg
+              class="w-5 h-5 text-[#00d09c]"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+              />
+            </svg>
+          }
+          <h3 class="text-[15px] font-semibold text-[#44475b] tracking-wide">{{ cat.title }}</h3>
+        </div>
+
+        <div class="flex flex-col">
+          @for (item of cat.items; track item) {
+            <button
+              class="flex items-center justify-between px-4 py-3.25 text-[14px] text-[#44475b] hover:bg-gray-50/70 transition-colors border-b border-gray-100 last:border-b-0 text-left w-full group"
+            >
+              <span class="group-hover:text-black transition-colors">{{ item }}</span>
+              <svg
+                class="h-3.5 w-3.5 text-gray-400 group-hover:text-gray-600 transition-colors"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  <div class="flex-2 w-full sticky top-24 flex flex-col gap-4">
+    <div
+      class="w-full bg-white border border-gray-200 rounded-lg p-12 flex flex-col items-center justify-center min-h-115 shadow-[0_1px_3px_rgba(0,0,0,0.02)]"
+    >
+      <div class="relative w-40 h-32 mb-6 flex flex-col justify-center items-center">
+        <div
+          class="w-28 h-20 bg-white border border-gray-200 rounded shadow-sm flex flex-col p-2 gap-1.5"
+        >
+          <div class="w-full h-2 bg-gray-100 rounded"></div>
+          <div class="w-4/5 h-2 bg-[#00d09c]/20 rounded"></div>
+          <div
+            class="w-full h-3 bg-linear-to-r from-[#00d09c]/10 to-transparent rounded flex items-center px-1"
+          >
+            <div class="w-2 h-1 bg-[#00d09c] rounded-full"></div>
+          </div>
+        </div>
+
+        <div class="absolute bottom-4 right-6 bg-[#00d09c]/10 p-2 rounded-full animate-pulse">
+          <svg class="w-6 h-6 text-[#44475b]" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M7 2l12 11.2-5.8.8 3.6 6.6-2.4 1.3-3.6-6.6-3.8 3.5z" />
+          </svg>
+        </div>
+      </div>
+
+      <p class="text-[#44475b] text-[15px] font-medium tracking-wide">
+        Select a report to get started
+      </p>
+    </div>
+
+    <button
+      class="w-full bg-white border border-gray-200 rounded-lg px-5 py-4 flex items-center justify-between text-[#44475b] hover:bg-gray-50 transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.02)]"
+    >
+      <div class="flex items-center gap-3">
+        <svg
+          class="w-5 h-5 text-[#7b7e8c]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          stroke-width="2"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          />
+        </svg>
+        <span class="text-[14.5px] font-medium tracking-wide">Need help?</span>
+      </div>
+      <svg
+        class="h-4 w-4 text-gray-400"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2.5"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </button>
+  </div>
+</div>

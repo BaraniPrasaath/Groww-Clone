@@ -1,0 +1,46 @@
+<div
+  class="w-full max-w-220 bg-white border border-gray-200 rounded-lg shadow-[0_1px_3px_rgba(0,0,0,0.02)] font-sans flex flex-col"
+>
+  <div class="px-6 py-4.5 border-b border-dashed border-gray-300">
+    <h2 class="text-[#44475b] text-[16px] font-semibold tracking-wide">Personal Details</h2>
+  </div>
+
+  <div class="flex flex-col">
+    @for (detail of details; track detail.label) {
+      <div
+        class="flex items-center justify-between px-6 py-3.5 border-b border-gray-100 last:border-b-0 hover:bg-gray-50/50 transition-colors"
+      >
+        <div class="flex flex-col gap-0.5">
+          <span class="text-[13px] text-[#7b7e8c] font-normal">
+            {{ detail.label }}
+          </span>
+          <span class="text-[14.5px] font-medium text-[#44475b]">
+            {{ detail.value }}
+          </span>
+        </div>
+
+        @if (detail.editable) {
+          <button
+            class="text-[#00d09c] hover:text-[#00b386] transition-colors p-1.5 rounded-full hover:bg-[#00d09c]/10 focus:outline-none"
+            title="Edit {{ detail.label }}"
+          >
+            <svg
+              class="w-3.75 h-3.75"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2.5"
+                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"
+              ></path>
+            </svg>
+          </button>
+        }
+      </div>
+    }
+  </div>
+</div>
