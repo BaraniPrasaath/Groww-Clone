@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,6 +7,4 @@ import { Component } from '@angular/core';
   templateUrl: './stocks.html',
   styleUrl: './stocks.css',
 })
-export class Stocks {
-
-}
+export class Stocks {}

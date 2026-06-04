@@ -1,1 +1,20 @@
-<p>order-header works!</p>
+<div class="max-w-280 mx-auto px-4 py-8 font-sans flex flex-col w-full">
+  <h1 class="text-[#44475b] text-[22px] font-semibold tracking-wide mb-8">All orders</h1>
+
+  <div class="w-full border-b border-gray-200 flex">
+    <nav class="flex gap-8 -mb-px">
+      @for (tab of tabs; track tab.label) {
+        <a
+          [routerLink]="tab.route"
+          routerLinkActive="!text-[#44475b] !border-[#44475b]"
+          class="text-[15px] font-medium text-[#7b7e8c] pb-3 border-b-2 border-transparent hover:text-[#44475b] transition-colors whitespace-nowrap cursor-pointer focus:outline-none"
+        >
+          {{ tab.label }}
+        </a>
+      }
+      <div class="border-b border-gray-200 w-230">
+        <h1></h1>
+      </div>
+    </nav>
+  </div>
+</div>

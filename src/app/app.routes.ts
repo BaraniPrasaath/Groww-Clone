@@ -40,6 +40,13 @@ import { AccountRelatedForms } from './features/user/profile/components/account-
 import { NomineeDetails } from './features/user/profile/components/nominee-details/nominee-details';
 import { ActiveDevices } from './features/user/profile/components/active-devices/active-devices';
 import { ReportSuspeciousActivity } from './features/user/profile/components/report-suspecious-activity/report-suspecious-activity';
+import { Inr } from './features/user/balance/inr/inr';
+import { Stocks } from './features/user/orders/component/stocks/stocks';
+import { CustomerSupport } from './features/user/help/component/customer-support/customer-support';
+import { CompleteSetup } from './features/user/help/component/complete-setup/complete-setup';
+import { Container } from './features/user/orders/container/container';
+import { FuturesAndOptions } from './features/user/orders/component/futures-and-options/futures-and-options';
+import { MutualFunds } from './features/user/orders/component/mutual-funds/mutual-funds';
 
 export const routes: Routes = [
   {
@@ -231,6 +238,54 @@ export const routes: Routes = [
             component: ReportSuspeciousActivity,
           },
         ],
+      },
+    ],
+  },
+  {
+    path: 'user/balance',
+    component: ContainerComponentWithout,
+    children: [
+      {
+        path: 'inr',
+        component: Inr,
+      },
+    ],
+  },
+  {
+    path: 'user/order',
+    component: ContainerComponentWithout,
+    children: [
+      {
+        path: '',
+        component: Container,
+        children: [
+          {
+            path: 'stock',
+            component: Stocks,
+          },
+          {
+            path: 'futures-and-options',
+            component: FuturesAndOptions,
+          },
+          {
+            path: 'mutual-funds',
+            component: MutualFunds,
+          },
+        ],
+      },
+    ],
+  },
+  {
+    path: 'help',
+    component: ContainerComponentWithout,
+    children: [
+      {
+        path: '',
+        component: CustomerSupport,
+      },
+      {
+        path: 'complete-setup',
+        component: CompleteSetup,
       },
     ],
   },

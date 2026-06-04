@@ -1,4 +1,6 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+
 
 @Component({
   selector: 'app-futures-and-options',
@@ -7,5 +9,5 @@ import { Component } from '@angular/core';
   styleUrl: './futures-and-options.css',
 })
 export class FuturesAndOptions {
-
+  
 }
