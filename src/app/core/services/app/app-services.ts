@@ -9,6 +9,9 @@ import { ExploreCompaniesResponse_etfByGroww } from '../../../../models/ExploreC
 import { NewsFeedResponse } from '../../../../models/NewsFeedResponse';
 import { mostBoughtStocks } from '../../../../models/mostBoughtStocks';
 import { EtfResponse } from '../../../../models/EtfResponse';
+import { GlobalMarketResponse } from '../../../../models/GlobalMarketResponse';
+import { IndianIndicesMetaResponse } from '../../../../models/IndianIndicesMetaResponse';
+import { IndianIndicesLiveResponse } from '../../../../models/IndianIndicesLiveResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -66,5 +69,21 @@ export class AppServices {
     return this.http.get<NewsFeedResponse>(
       `https://groww.in/v2/api/feed/public?page=0&publisherId=stocknewssummary&size=${size}`,
     );
+  }
+
+  getGlobeIndices() {
+    return this.http.get<GlobalMarketResponse>(
+      'https://groww.in/v1/api/stocks_data/v1/global_instruments?instrumentType=GLOBAL_INSTRUMENTS',
+    );
+  }
+
+  getIndianIndicesMeta() {
+    return this.http.get<IndianIndicesMetaResponse>(
+      'https://groww.in/v1/api/stocks_data/v1/company/search_id/nifty?fields=ALL_ASSETS&page=0&size=10',
+    );
+  }
+
+  getIndianIndicesLive() {
+    return this.http.get<IndianIndicesLiveResponse>('http://localhost:3000/indian-indices');
   }
 }

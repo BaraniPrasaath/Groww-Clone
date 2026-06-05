@@ -1,0 +1,110 @@
+<div class="w-310 mx-auto p-6 font-sans bg-white text-slate-800">
+  <!-- Title Header -->
+  <h2 class="text-[22px] font-semibold text-[#2c3e50] mb-4">All Indices</h2>
+
+  <!-- Curved Map Section Showcase -->
+  <div class="relative w-full overflow-hidden flex justify-center items-center h-65 mb-2">
+    <!-- Curved Top Mask Layer Effect to simulate the map curvature perspective -->
+    <div
+      class="absolute top-0 inset-0 bg-linear-to-b from-white via-transparent to-transparent z-10 pointer-events-none"
+    ></div>
+    <img
+      [src]="worldMapUrl()"
+      alt="World Map Grid"
+      class="w-300 h-auto object-cover opacity-95 select-none mt-10"
+      style="clip-path: ellipse(80% 55% at 50% 75%)"
+    />
+  </div>
+
+  <!-- Table/Tabs Main Card -->
+  <div class="w-full bg-white border border-[#edf2f7] rounded-xl shadow-sm overflow-hidden">
+    <!-- Navigation Tabs Panel -->
+    <div class="flex items-center bg-[#f8fafc] border-b border-[#edf2f7] px-6">
+      <button
+        (click)="activeTab()"
+        [ngClass]="
+          indianTab()
+            ? 'text-[#00b074] border-[#00b074] font-medium'
+            : 'text-slate-500 border-transparent hover:text-slate-800'
+        "
+        class="py-4 px-4 text-sm border-b-2 transition-all duration-200 mr-4 focus:outline-none"
+      >
+        Indian Indices
+      </button>
+      <button
+        (click)="activeTab()"
+        [ngClass]="
+          !indianTab()
+            ? 'text-[#00b074] border-[#00b074] font-medium'
+            : 'text-slate-500 border-transparent hover:text-slate-800'
+        "
+        class="py-4 px-4 text-sm border-b-2 transition-all duration-200 focus:outline-none"
+      >
+        Global Indices
+      </button>
+    </div>
+
+    <!-- Data Grid Layout Table Container -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-left border-collapse min-w-225">
+        <thead>
+          <tr class="border-b border-[#f1f5f9]">
+            <th class="py-3 px-6 text-[12px] font-medium text-slate-400 w-60">Index name</th>
+            <th class="py-3 px-4 text-[12px] font-medium text-slate-400 text-right">Last traded</th>
+            <th class="py-3 px-4 text-[12px] font-medium text-slate-400 text-right">Day change</th>
+            <th class="py-3 px-4 text-[12px] font-medium text-slate-400 text-right">High</th>
+            <th class="py-3 px-4 text-[12px] font-medium text-slate-400 text-right">Low</th>
+            <th class="py-3 px-4 text-[12px] font-medium text-slate-400 text-right">Open</th>
+            <th class="py-3 px-4 text-[12px] font-medium text-slate-400 text-right">Prev. Close</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (row of currentData; track row.name) {
+            <tr
+              class="border-b border-[#f8fafc] hover:bg-slate-50/50 transition-colors duration-150"
+            >
+              <!-- Name & Timestamp Column -->
+              <td class="py-4 px-6 flex items-start gap-3">
+                <img
+                  [src]="row.logoUrl"
+                  [alt]="row.name"
+                  class="w-6 h-6 object-contain rounded-full shadow-sm mt-0.5"
+                />
+                <div class="flex flex-col">
+                  <span class="text-[14px] font-semibold text-slate-700 tracking-tight">{{
+                    row.name
+                  }}</span>
+                  <span class="text-[11px] text-slate-400 mt-0.5">{{ row.timestamp }}</span>
+                </div>
+              </td>
+              <!-- Financial Values Metrics -->
+              <td
+                class="py-4 px-4 text-[14px] font-semibold text-slate-700 text-right tabular-nums"
+              >
+                {{ row.lastTraded }}
+              </td>
+              <td
+                class="py-4 px-4 text-[14px] font-medium text-right tabular-nums"
+                [ngClass]="row.isPositive ? 'text-[#00b074]' : 'text-rose-500'"
+              >
+                {{ row.dayChange }} {{ row.dayChangePercent }}
+              </td>
+              <td class="py-4 px-4 text-[13px] text-slate-600 text-right tabular-nums">
+                {{ row.high }}
+              </td>
+              <td class="py-4 px-4 text-[13px] text-slate-600 text-right tabular-nums">
+                {{ row.low }}
+              </td>
+              <td class="py-4 px-4 text-[13px] text-slate-600 text-right tabular-nums">
+                {{ row.open }}
+              </td>
+              <td class="py-4 px-4 text-[13px] text-slate-600 text-right tabular-nums">
+                {{ row.prevClose }}
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

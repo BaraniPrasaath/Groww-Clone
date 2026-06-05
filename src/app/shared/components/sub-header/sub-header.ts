@@ -3,11 +3,11 @@ import { Component, signal } from '@angular/core';
 import { price2show } from '../../../../models/price2show';
 import { WelcomeService } from '../../../core/services/welcome-service';
 import { commodityDetails } from '../../../../models/MarketPrice';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sub-header',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './sub-header.html',
   styleUrl: './sub-header.css',
 })

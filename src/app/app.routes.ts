@@ -47,6 +47,7 @@ import { CompleteSetup } from './features/user/help/component/complete-setup/com
 import { Container } from './features/user/orders/container/container';
 import { FuturesAndOptions } from './features/user/orders/component/futures-and-options/futures-and-options';
 import { MutualFunds } from './features/user/orders/component/mutual-funds/mutual-funds';
+import { GlobeIndices } from './features/dashboard/explore/pages/globe-indices/globe-indices';
 
 export const routes: Routes = [
   {
@@ -112,6 +113,16 @@ export const routes: Routes = [
       {
         path: 'watchlist',
         component: Watchlist,
+      },
+    ],
+  },
+  {
+    path: 'indices',
+    component: ContainerComponentWithout,
+    children: [
+      {
+        path: 'global-indices',
+        component: GlobeIndices,
       },
     ],
   },

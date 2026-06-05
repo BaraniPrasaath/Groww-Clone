@@ -171,3 +171,71 @@ app.get('/volume-shokers', async (req, res) => {
 });
 
 app.listen(3000);
+
+app.get("/indian-indices", async (req, res) => {
+  try {
+    const response = await axios.post(
+      "https://groww.in/v1/api/stocks_data/v1/tr_live_delayed/segment/CASH/latest_aggregated",
+      {
+        exchangeAggReqMap: {
+          NSE: {
+            priceSymbolList: [],
+            indexSymbolList: [
+              "NIFTY",
+              "BANKNIFTY",
+              "FINNIFTY",
+              "NIFTYMIDSELECT",
+              "INDIAVIX",
+              "NIFTYTOTALMCAP",
+              "NIFTYJR",
+              "NIFTY100",
+              "NIFTYMIDCAP",
+              "NIFTY500",
+              "NIFTYAUTO",
+              "NIFTYSMALL",
+              "NIFTYFMCG",
+              "NIFTYMETAL",
+              "NIFTYPHARMA",
+              "NIFTYPSUBANK",
+              "NIFTYIT",
+              "NIFTYSMALLCAP250",
+              "NIFTYMIDCAP150",
+              "NIFTYCDTY",
+            ],
+          },
+          BSE: {
+            priceSymbolList: [],
+            indexSymbolList: ["1", "14", "2", "19", "23", "93"],
+          },
+        },
+      },
+      {
+        headers: {
+          accept: "application/json",
+          "content-type": "application/json",
+
+          authorization: "Bearer YOUR_ACCESS_TOKEN",
+
+          "x-app-id": "growwWeb",
+          "x-platform": "web",
+          "x-device-type": "desktop",
+
+          // These values may be required by Groww
+          "x-device-id": "YOUR_DEVICE_ID",
+          "x-device-id-v2": "YOUR_DEVICE_ID",
+          "x-request-checksum": "YOUR_CHECKSUM",
+        },
+      }
+    );
+
+    res.json(response.data);
+  } catch (error) {
+    console.error(
+      error.response?.data || error.message
+    );
+
+    res.status(error.response?.status || 500).json({
+      error: error.response?.data || error.message,
+    });
+  }
+});

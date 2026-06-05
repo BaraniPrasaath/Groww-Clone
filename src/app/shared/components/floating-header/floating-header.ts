@@ -17,7 +17,7 @@ import { ProfileOptions } from '../../../features/user/profile-options/profile-o
 
 @Component({
   selector: 'app-floating-header',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './floating-header.html',
   styleUrl: './floating-header.css',
 })
