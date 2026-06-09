@@ -53,11 +53,14 @@ interface Stock {
 export class LiveChart implements OnInit {
   @ViewChild('chart') chart!: ChartComponent;
   public chartOptions!: Partial<ChartOptions>;
-  codeScript = signal('');
+  nseCodeScript = signal('');
+  bseCodeScript = signal('');
   displayName = signal('');
   displayLogo = signal('');
   changeVal = signal(0);
-  changePerc = signal(0);
+  changePerc = signal('');
+  isNSE = signal(true);
+  chartOption = signal('NSE');
 
   stockData = signal<Stock>({
     name: '',
@@ -83,49 +86,35 @@ export class LiveChart implements OnInit {
 
   ngOnInit(): void {
     this.stockData.set(this.storeSer.getStocks()!);
-    this.changeVal.set(Number(this.storeSer.getStocks()?.change));
-    this.changePerc.set(Number(this.storeSer.getStocks()?.changePercent)! * 100);
-    let interval = 'intervalInMinutes=1';
-    let days = 'daily';
-
     const searchId = this.route.snapshot.paramMap.get('id');
     console.log('search id: ', searchId);
     this.appSer.getCompanyDetails(searchId!).subscribe({
       next: (res) => {
-        this.codeScript.set(
-          res.header.nseScriptCode ? res.header.nseScriptCode : res.header.bseScriptCode,
-        );
-        console.log(`[${this.codeScript()}]`);
+        this.nseCodeScript.set(res.header.nseScriptCode);
+        this.bseCodeScript.set(res.header.bseScriptCode);
+        console.log(`[${this.nseCodeScript()}]`);
         this.displayName.set(res.header.displayName);
         this.displayLogo.set(res.header.logoUrl);
-        this.appSer.getChartData(this.codeScript(), interval, days).subscribe({
-          next: (res) => {
-            console.log(res);
-            console.log(res.candles[0]);
-            console.log(res.candles.slice(0, 5));
-            this.chartRawData.set(res.candles);
-            this.initChart();
-          },
-        });
+        this.onTimeframeChange('1D');
       },
     });
   }
 
   // Add this method to your LiveChart class
   private getChartDataForTimeframe(tf: string) {
-    const symbol = this.codeScript(); // Assuming you have the script code stored
+    const symbol = this.isNSE() ? this.nseCodeScript() : this.bseCodeScript(); // Assuming you have the script code stored
 
     // Define mapping for endpoints
     const endpoints: { [key: string]: string } = {
-      '1D': `chart/delayed/exchange/NSE/segment/CASH/${symbol}/daily?intervalInMinutes=1&minimal=true`,
-      '1W': `chart/delayed/exchange/NSE/segment/CASH/${symbol}/weekly?intervalInMinutes=5&minimal=true`,
-      '1M': `chart/delayed/exchange/NSE/segment/CASH/${symbol}/monthly?intervalInMinutes=30&minimal=true`,
-      '3M': `chart/delayed/exchange/NSE/segment/CASH/${symbol}/monthly/v2?months=3&minimal=true`,
-      '6M': `chart/delayed/exchange/NSE/segment/CASH/${symbol}/monthly/v2?months=6&minimal=true`,
-      '1Y': `chart/delayed/exchange/NSE/segment/CASH/${symbol}/1y?intervalInDays=1&minimal=true`,
-      '3Y': `chart/delayed/exchange/NSE/segment/CASH/${symbol}/3y?intervalInDays=3&minimal=true`,
-      '5Y': `chart/delayed/exchange/NSE/segment/CASH/${symbol}/5y?intervalInDays=5&minimal=true`,
-      All: `chart/delayed/exchange/NSE/segment/CASH/${symbol}/all?noOfCandles=300`,
+      '1D': `chart/delayed/exchange/${this.chartOption()}/segment/CASH/${symbol}/daily?intervalInMinutes=1&minimal=true`,
+      '1W': `chart/delayed/exchange/${this.chartOption()}/segment/CASH/${symbol}/weekly?intervalInMinutes=5&minimal=true`,
+      '1M': `chart/delayed/exchange/${this.chartOption()}/segment/CASH/${symbol}/monthly?intervalInMinutes=30&minimal=true`,
+      '3M': `chart/delayed/exchange/${this.chartOption()}/segment/CASH/${symbol}/monthly/v2?months=3&minimal=true`,
+      '6M': `chart/delayed/exchange/${this.chartOption()}/segment/CASH/${symbol}/monthly/v2?months=6&minimal=true`,
+      '1Y': `chart/delayed/exchange/${this.chartOption()}/segment/CASH/${symbol}/1y?intervalInDays=1&minimal=true`,
+      '3Y': `chart/delayed/exchange/${this.chartOption()}/segment/CASH/${symbol}/3y?intervalInDays=3&minimal=true`,
+      '5Y': `chart/delayed/exchange/${this.chartOption()}/segment/CASH/${symbol}/5y?intervalInDays=5&minimal=true`,
+      All: `chart/delayed/exchange/${this.chartOption()}/segment/CASH/${symbol}/all?noOfCandles=300`,
     };
 
     return endpoints[tf];
@@ -147,12 +136,21 @@ export class LiveChart implements OnInit {
         let formattedPerc = (rawPerc * 100).toFixed(2);
 
         this.changePerc.set(
-          this.changeVal() >= 0 ? Number(formattedPerc) : Number(formattedPerc) * -1,
+          this.changeVal() >= 0
+            ? Number(formattedPerc).toFixed(2)
+            : (Number(formattedPerc) * -1).toFixed(2),
         );
         this.chartRawData.set(res.candles);
         this.initChart();
       },
     });
+  }
+
+  onOptionClick() {
+    this.isNSE.set(!this.isNSE());
+    this.isNSE() ? this.chartOption.set('NSE') : this.chartOption.set('BSE');
+    console.log(this.chartOption());
+    this.onTimeframeChange(this.activeTimeframe());
   }
 
   private initChart(): void {
