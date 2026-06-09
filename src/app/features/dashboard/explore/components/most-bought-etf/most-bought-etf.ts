@@ -1,10 +1,9 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { AppServices } from '../../../../../core/services/app/app-services';
-import { ObservableNotification } from 'rxjs';
-import { ExploreCompanies } from '../../../../../../models/ExploreCompaniesResponse';
 import { ExploreCompaniesResponse_etf } from '../../../../../../models/ExploreCompaniesResponse_etf';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { StockStore } from '../../../../../shared/services/Store/stock-store';
 
 interface ETF {
   category: string;
@@ -14,6 +13,8 @@ interface ETF {
   changeValue: string;
   changePercent: string;
   isPositive: boolean;
+  searchId: string;
+  nseScriptCode: string;
 }
 
 @Component({
@@ -25,7 +26,11 @@ interface ETF {
 export class MostBoughtEtf implements OnInit {
   etfs = signal<ETF[]>([]);
 
-  constructor(private appSer: AppServices) {
+  constructor(
+    private appSer: AppServices,
+    private storeSer: StockStore,
+    private route: Router,
+  ) {
     effect(() => {
       console.log(this.etfs());
     });
@@ -65,6 +70,8 @@ export class MostBoughtEtf implements OnInit {
                     ? '(' + item.stats.dayChangePerc.toFixed(2) + '%)'
                     : '(' + (item.stats.dayChangePerc * -1).toFixed(2) + '%)',
                 isPositive: item.stats.dayChange >= 0,
+                searchId: item.company.searchId,
+                nseScriptCode: item.company.nseScriptCode,
               });
             });
           }
@@ -73,5 +80,10 @@ export class MostBoughtEtf implements OnInit {
         this.etfs.set(transformedData);
       },
     });
+  }
+
+  onClick(i: number) {
+    this.storeSer.setEtfs(this.etfs()[i]);
+    this.route.navigate(['/stocks', this.etfs()[i].searchId]);
   }
 }

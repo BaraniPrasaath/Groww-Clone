@@ -1,5 +1,5 @@
 import { Component, OnInit, signal, ViewChild, ViewContainerRef } from '@angular/core';
-import { SharedDataService } from '../../../core/services/shared-data-service';
+import { SharedDataService } from '../../services/data-share/shared-data-service';
 import { Router, RouterLink } from '@angular/router';
 import { ProfileOptions } from '../../../features/user/profile-options/profile-options';
 import { CommonModule } from '@angular/common';

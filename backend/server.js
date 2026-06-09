@@ -1,7 +1,9 @@
 const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
+const crypto = require('crypto');
 const qs = require('querystring');
+const router = express.Router();
 const { accessToken, checkSum, deviceId, appId } = require('./config');
 require('dotenv').config();
 
@@ -136,7 +138,7 @@ app.get('/etfSeeMore', async (req, res) => {
           'x-platform': 'web',
 
           'x-request-checksum':
-            'bnhtNjVwIyMjZDBnM3JreUhIa0ZESm1pT0FUVVUzZ0lwNHJHK2JoektRTWFmME9GUDJzVEM5bmk4Q0h6ODlBSjZhQ2YvczVwd1I1OXRTZmtabmZVUk80OGM3R2J1Y2VqRWFoMmZ4NUZBR2ZKMXBqdkRtWTA9',
+            'aDRxZm91IyMjMTM4SXpSZldRckc4NFNkdFY0V2tqb0FjRTFFQXFBSVZUYlpQaWwrU1JOZyszckIyR2dRdnV6Nm9LVWtwYUxUUktXRk82clN2bWw1TWxxQ2xkaDBBUC9Lc1hDVitCTlIwbmRwREF2L0xRSUU9',
         },
       },
     );
@@ -172,70 +174,97 @@ app.get('/volume-shokers', async (req, res) => {
 
 app.listen(3000);
 
-app.get("/indian-indices", async (req, res) => {
+app.get('/indian-indices', async (req, res) => {
   try {
     const response = await axios.post(
-      "https://groww.in/v1/api/stocks_data/v1/tr_live_delayed/segment/CASH/latest_aggregated",
+      'https://groww.in/v1/api/stocks_data/v1/tr_live_delayed/segment/CASH/latest_aggregated',
       {
         exchangeAggReqMap: {
           NSE: {
             priceSymbolList: [],
             indexSymbolList: [
-              "NIFTY",
-              "BANKNIFTY",
-              "FINNIFTY",
-              "NIFTYMIDSELECT",
-              "INDIAVIX",
-              "NIFTYTOTALMCAP",
-              "NIFTYJR",
-              "NIFTY100",
-              "NIFTYMIDCAP",
-              "NIFTY500",
-              "NIFTYAUTO",
-              "NIFTYSMALL",
-              "NIFTYFMCG",
-              "NIFTYMETAL",
-              "NIFTYPHARMA",
-              "NIFTYPSUBANK",
-              "NIFTYIT",
-              "NIFTYSMALLCAP250",
-              "NIFTYMIDCAP150",
-              "NIFTYCDTY",
+              'NIFTY',
+              'BANKNIFTY',
+              'FINNIFTY',
+              'NIFTYMIDSELECT',
+              'INDIAVIX',
+              'NIFTYTOTALMCAP',
+              'NIFTYJR',
+              'NIFTY100',
+              'NIFTYMIDCAP',
+              'NIFTY500',
+              'NIFTYAUTO',
+              'NIFTYSMALL',
+              'NIFTYFMCG',
+              'NIFTYMETAL',
+              'NIFTYPHARMA',
+              'NIFTYPSUBANK',
+              'NIFTYIT',
+              'NIFTYSMALLCAP250',
+              'NIFTYMIDCAP150',
+              'NIFTYCDTY',
             ],
           },
           BSE: {
             priceSymbolList: [],
-            indexSymbolList: ["1", "14", "2", "19", "23", "93"],
+            indexSymbolList: ['1', '14', '2', '19', '23', '93'],
           },
         },
       },
       {
         headers: {
-          accept: "application/json",
-          "content-type": "application/json",
+          accept: 'application/json',
+          'content-type': 'application/json',
 
-          authorization: "Bearer YOUR_ACCESS_TOKEN",
+          authorization: 'Bearer YOUR_ACCESS_TOKEN',
 
-          "x-app-id": "growwWeb",
-          "x-platform": "web",
-          "x-device-type": "desktop",
+          'x-app-id': 'growwWeb',
+          'x-platform': 'web',
+          'x-device-type': 'desktop',
 
           // These values may be required by Groww
-          "x-device-id": "YOUR_DEVICE_ID",
-          "x-device-id-v2": "YOUR_DEVICE_ID",
-          "x-request-checksum": "YOUR_CHECKSUM",
+          'x-device-id': 'YOUR_DEVICE_ID',
+          'x-device-id-v2': 'YOUR_DEVICE_ID',
+          'x-request-checksum': 'YOUR_CHECKSUM',
         },
-      }
+      },
     );
 
     res.json(response.data);
   } catch (error) {
-    console.error(
-      error.response?.data || error.message
-    );
+    console.error(error.response?.data || error.message);
 
     res.status(error.response?.status || 500).json({
       error: error.response?.data || error.message,
     });
+  }
+});
+
+app.get('/api/delivery-volume/:searchId', async (req, res) => {
+  try {
+    const { searchId } = req.params;
+    const { periodType } = req.query;
+
+    const response = await axios.get(
+      `https://groww.in/v1/api/equity/data/v1/client/stocks/volume/summary/search_id/${searchId}?periodType=${periodType}&size=5`,
+      {
+        headers: {
+          accept: 'application/json, text/plain, */*',
+          'x-app-id': 'growwWeb',
+          'x-platform': 'web',
+          'x-device-type': 'desktop',
+          'x-device-id': '8cb807a4-b911-58b0-b718-2189243a7865',
+          'x-device-id-v2': '8cb807a4-b911-58b0-b718-2189243a7865',
+          'x-request-checksum':
+            'N3QybWl1IyMjKy8yWFRIVXk0c3kvUENCR0gxWEs4SXR4UlNUMDVMOGpHUCtoZnR6Q3FCNGc5K0tKZDJxcVVuZmRxNTh6M1FodlpUQzM1c1FLZ1pYRFB5K3RBZmpadGFsTG9WTnFUTkJQc2FXR0xpZHNzRUk9',
+          'x-request-id': crypto.randomUUID(),
+        },
+      },
+    );
+
+    res.json(response.data);
+  } catch (err) {
+    console.error(err.response?.data || err.message);
+    res.status(500).json(err.response?.data || { error: err.message });
   }
 });

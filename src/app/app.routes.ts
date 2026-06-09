@@ -48,6 +48,11 @@ import { Container } from './features/user/orders/container/container';
 import { FuturesAndOptions } from './features/user/orders/component/futures-and-options/futures-and-options';
 import { MutualFunds } from './features/user/orders/component/mutual-funds/mutual-funds';
 import { GlobeIndices } from './features/dashboard/explore/pages/globe-indices/globe-indices';
+import { LiveChart } from './features/stock-details/live-chart/live-chart';
+import { Overview } from './features/stock-details/components/overview/overview';
+import { Technical } from './features/stock-details/components/technical/technical';
+import { News } from './features/stock-details/components/news/news';
+import { Events } from './features/stock-details/components/events/events';
 
 export const routes: Routes = [
   {
@@ -297,6 +302,34 @@ export const routes: Routes = [
       {
         path: 'complete-setup',
         component: CompleteSetup,
+      },
+    ],
+  },
+  {
+    path: 'stocks',
+    component: ContainerComponent,
+    children: [
+      {
+        path: ':id',
+        component: LiveChart,
+        children: [
+          {
+            path: '',
+            component: Overview,
+          },
+          {
+            path: 'technicals',
+            component: Technical,
+          },
+          {
+            path: 'news',
+            component: News,
+          },
+          {
+            path: 'events',
+            component: Events,
+          },
+        ],
       },
     ],
   },

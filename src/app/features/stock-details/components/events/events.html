@@ -1,0 +1,120 @@
+<div class="w-full max-w-212.5 mx-auto font-sans antialiased text-[#1e293b]">
+  @for (group of groupedEvents(); track group.year) {
+    <div class="mb-8">
+      <h2 class="text-[18px] font-bold text-[#7b8395] mb-4">{{ group.year }}</h2>
+
+      <div class="space-y-3">
+        @for (item of group.items; track item.dateObj) {
+          <div
+            class="flex items-center gap-4 p-4 bg-white border border-gray-100 rounded-xl hover:shadow-sm transition-all"
+          >
+            <div
+              class="flex flex-col items-center justify-center min-w-14 p-2 border border-gray-100 rounded-lg bg-gray-50/50"
+            >
+              <span class="text-[18px] font-bold text-[#475569] leading-tight">{{ item.day }}</span>
+              <span class="text-[12px] font-medium text-[#94a3b8]">{{ item.month }}</span>
+            </div>
+
+            <div class="grow">
+              <h3 class="text-[15px] font-semibold text-[#1e293b]">{{ item.title }}</h3>
+              <p class="text-[13px] text-[#64748b] mt-0.5">{{ item.subtitle }}</p>
+            </div>
+
+            <div class="flex items-center gap-3">
+              @if (item.actionText) {
+                <a class="flex items-center gap-1 cursor-pointer group">
+                  <span
+                    class="text-[13px] font-semibold text-[#475569] border-b border-dashed border-[#94a3b8] pb-px group-hover:border-[#475569] transition-colors"
+                  >
+                    {{ item.actionText }}
+                  </span>
+                  <svg
+                    viewBox="0 0 24 24"
+                    class="w-4 h-4 text-[#475569]"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </a>
+              }
+
+              @if (item.detailValue) {
+                <div class="flex items-center gap-4 cursor-pointer">
+                  <div class="flex flex-col items-end">
+                    <span class="text-[13px] font-bold text-[#475569] leading-tight">{{
+                      item.detailValue
+                    }}</span>
+                    <span class="text-[12px] text-[#94a3b8]">{{ item.detailDesc }}</span>
+                  </div>
+                  <svg
+                    viewBox="0 0 24 24"
+                    class="w-4 h-4 text-[#94a3b8]"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+
+  @if (rawEvents().length > INITIAL_LIMIT) {
+    <button
+      (click)="toggleView()"
+      class="mt-2 text-[15px] font-semibold text-[#00b087] hover:underline focus:outline-none"
+    >
+      {{ showAll() ? 'View less' : 'View more' }}
+    </button>
+  }
+
+  <div
+    class="mt-8 p-4 flex items-center justify-between border border-gray-100 rounded-xl hover:shadow-sm transition-all cursor-pointer bg-white"
+  >
+    <div class="flex items-center gap-3">
+      <div class="p-2 bg-green-50 rounded-lg">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-6 h-6 text-[#00b087]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
+        </svg>
+      </div>
+      <div>
+        <p class="text-[13px] text-[#64748b]">Events calendar</p>
+        <p class="text-[15px] font-semibold text-[#1e293b]">View upcoming events in other stocks</p>
+      </div>
+    </div>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="w-5 h-5 text-gray-400"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+        clip-rule="evenodd"
+      />
+    </svg>
+  </div>
+</div>

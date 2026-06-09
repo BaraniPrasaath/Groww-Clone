@@ -85,7 +85,11 @@ export class EtfScreener implements OnInit {
             };
           }) ?? [];
 
+        console.log('data: ', etfs);
+        console.log('before push: ', this.etfs());
+
         this.etfs.set(etfs);
+        console.log('after push: ', this.etfs());
         this.loading.set(false);
       },
 
@@ -97,10 +101,16 @@ export class EtfScreener implements OnInit {
   }
 
   private formatNumber(value: number): string {
+    if (value == null) {
+      return '--';
+    }
     return Number(value).toFixed(2);
   }
 
   private formatVolume(volume: number): string {
+    if (volume == null) {
+      return '--';
+    }
     if (volume >= 10000000) {
       return `${(volume / 10000000).toFixed(2)} Cr`;
     }
@@ -113,6 +123,9 @@ export class EtfScreener implements OnInit {
   }
 
   private formatAum(aum: number): string {
+    if (aum == null) {
+      return '--';
+    }
     return `₹${aum.toLocaleString('en-IN')} Cr`;
   }
 }

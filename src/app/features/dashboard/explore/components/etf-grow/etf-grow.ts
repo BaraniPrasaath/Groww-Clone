@@ -1,17 +1,20 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, effect, OnInit, signal } from '@angular/core';
 import { AppServices } from '../../../../../core/services/app/app-services';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { StockStore } from '../../../../../shared/services/Store/stock-store';
 
 // Ensure this interface matches the structure you want in your UI
 interface Etf {
   name: string;
   logo: string;
-  price?: string;         // Optional
-  changeValue?: string;   // Optional
+  price?: string; // Optional
+  changeValue?: string; // Optional
   changePercent?: string; // Optional
-  isPositive?: boolean;   // Optional
-  nfoStatus?: string;     // Added for NFO items
+  isPositive?: boolean; // Optional
+  nfoStatus?: string; // Added for NFO items
+  searchId: string;
+  nseScriptCode: string;
 }
 
 @Component({
@@ -24,7 +27,11 @@ interface Etf {
 export class EtfGrow implements OnInit {
   etfs = signal<Etf[]>([]);
 
-  constructor(private appSer: AppServices) {
+  constructor(
+    private appSer: AppServices,
+    private storeSer: StockStore,
+    private route: Router,
+  ) {
     effect(() => {
       console.log('Signal state updated:', this.etfs());
     });
@@ -32,32 +39,41 @@ export class EtfGrow implements OnInit {
 
   ngOnInit(): void {
     this.appSer.getETFbyGroww(4).subscribe({
-  next: (res) => {
-    const rawCompanies = res.exploreCompanies['ETF_NFO'] || [];
+      next: (res) => {
+        const rawCompanies = res.exploreCompanies['ETF_NFO'] || [];
 
-    const formattedEtfs: Etf[] = rawCompanies.map((item) => {
-      // Check if stats exist
-      const hasStats = !!item.stats;
-      const changeValue = hasStats ? item.stats.dayChange : 0;
+        const formattedEtfs: Etf[] = rawCompanies.map((item) => {
+          // Check if stats exist
+          const hasStats = !!item.stats;
+          const changeValue = hasStats ? item.stats.dayChange : 0;
 
-      return {
-        name: item.company.companyName,
-        logo: item.company.imageUrl,
-        
-        // Conditional mapping
-        price: hasStats ? item.stats.ltp.toFixed(2) : undefined,
-        changeValue: hasStats ? item.stats.dayChange.toFixed(2) : undefined,
-        changePercent: hasStats ? `(${changeValue>0? item.stats.dayChangePerc.toFixed(2):(item.stats.dayChangePerc * (-1)).toFixed(2)}%)` : undefined,
-        isPositive: hasStats ? item.stats.dayChange >= 0 : undefined,
-        
-        // Handle NFO Status if stats are missing
-        nfoStatus: !hasStats ? item.companyMetaContent?.metaContent?.status?.value : undefined
-      };
+          return {
+            name: item.company.companyName,
+            logo: item.company.imageUrl,
+
+            // Conditional mapping
+            price: hasStats ? item.stats.ltp.toFixed(2) : undefined,
+            changeValue: hasStats ? item.stats.dayChange.toFixed(2) : undefined,
+            changePercent: hasStats
+              ? `(${changeValue > 0 ? item.stats.dayChangePerc.toFixed(2) : (item.stats.dayChangePerc * -1).toFixed(2)}%)`
+              : undefined,
+            isPositive: hasStats ? item.stats.dayChange >= 0 : undefined,
+
+            // Handle NFO Status if stats are missing
+            nfoStatus: !hasStats ? item.companyMetaContent?.metaContent?.status?.value : undefined,
+            searchId: item.company.searchId,
+            nseScriptCode: item.company.nseScriptCode,
+          };
+        });
+
+        this.etfs.set(formattedEtfs);
+      },
+      error: (err) => console.error('Error fetching ETFs:', err),
     });
+  }
 
-    this.etfs.set(formattedEtfs);
-  },
-  error: (err) => console.error('Error fetching ETFs:', err)
-});
+  onClick(i: number) {
+    this.storeSer.setEtfs(this.etfs()[i]);
+    this.route.navigate(['/stocks', this.etfs()[i].searchId]);
   }
 }

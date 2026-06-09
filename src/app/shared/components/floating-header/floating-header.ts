@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { price2show } from '../../../../models/price2show';
 import { WelcomeService } from '../../../core/services/welcome-service';
-import { SharedDataService } from '../../../core/services/shared-data-service';
+import { SharedDataService } from '../../services/data-share/shared-data-service';
 import { commodityDetails } from '../../../../models/MarketPrice';
 import { Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';

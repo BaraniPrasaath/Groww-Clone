@@ -1,19 +1,22 @@
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { Component, effect, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 import { AppServices } from '../../../../../core/services/app/app-services';
 import { TopMoversResponse } from '../../../../../../models/TopMoversResponse';
+import { StockStore } from '../../../../../shared/services/Store/stock-store';
 
 interface Stock {
   name: string;
   logo: string;
-  price: number;
+  price: string;
   change: string;
   changePercent: string;
   volume: number;
   isHovered?: boolean;
   isPositive: boolean;
+  searchId: string;
+  nseScriptCode: string;
 }
 
 interface IndexOption {
@@ -28,7 +31,11 @@ interface IndexOption {
   styleUrl: './top-movers.css',
 })
 export class TopMovers {
-  constructor(private appSer: AppServices) {
+  constructor(
+    private appSer: AppServices,
+    private storeSer: StockStore,
+    private route: Router,
+  ) {
     effect(() => {
       this.loadStocks(this.selectedMover(), this.selectedIndex());
     });
@@ -81,12 +88,14 @@ export class TopMovers {
           return {
             name: stock.companyName,
             logo: stock.logoUrl,
-            price: stock.ltp,
+            price: stock.ltp.toFixed(2),
             change: change.toFixed(2),
             changePercent: `(${Math.abs(changePercent).toFixed(2)}%)`,
             volume: stock.volumeWeekAvg,
             isHovered: false,
             isPositive: change >= 0,
+            searchId: stock.searchId,
+            nseScriptCode: stock.nseScriptCode,
           };
         });
 
@@ -121,5 +130,10 @@ export class TopMovers {
       this.indexOptions.find((option) => option.value === this.selectedIndex())?.label ??
       'Select Index'
     );
+  }
+
+  onClickTab(i: number) {
+    this.storeSer.setStocks(this.stocks()[i]);
+    this.route.navigate(['/stocks', this.stocks()[i].searchId]);
   }
 }

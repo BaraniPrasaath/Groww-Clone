@@ -1,0 +1,22 @@
+<div
+  class="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer bg-white"
+  (click)="openStock(stock.searchId)"
+>
+  <img
+    [src]="stock.logo"
+    [alt]="stock.name"
+    class="w-10 h-10 mb-3 rounded-md border border-gray-100"
+  />
+
+  <h3 class="font-normal text-gray-600 mb-8 truncate text-sm">
+    {{ stock.name }}
+  </h3>
+
+  <div class="font-medium text-gray-600 text-sm">
+    {{ stock.price | currency:'INR'}}
+  </div>
+
+  <div [ngClass]="stock.isPositive ? 'text-green-600' : 'text-red-500'" class="font-normal text-sm">
+    {{ stock.changeValue }} ({{ stock.changePercent }})
+  </div>
+</div>

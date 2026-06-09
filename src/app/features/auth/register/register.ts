@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, signal } from '@angular/core';
 import { authModel, fullData } from '../../../../models/auth-data-model';
 import { AuthService } from '../../../core/services/auth-service';
-import { SharedDataService } from '../../../core/services/shared-data-service';
+import { SharedDataService } from '../../../shared/services/data-share/shared-data-service';
 import { Router } from '@angular/router';
 import {
   FormControl,

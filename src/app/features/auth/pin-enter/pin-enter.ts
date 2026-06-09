@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth-service';
-import { SharedDataService } from '../../../core/services/shared-data-service';
+import { SharedDataService } from '../../../shared/services/data-share/shared-data-service';
 import { Router } from '@angular/router';
 
 @Component({

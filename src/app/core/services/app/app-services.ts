@@ -12,6 +12,11 @@ import { EtfResponse } from '../../../../models/EtfResponse';
 import { GlobalMarketResponse } from '../../../../models/GlobalMarketResponse';
 import { IndianIndicesMetaResponse } from '../../../../models/IndianIndicesMetaResponse';
 import { IndianIndicesLiveResponse } from '../../../../models/IndianIndicesLiveResponse';
+import { ChartResponse } from '../../../../models/ChartResponse';
+import { CompanyProfileResponse } from '../../../../models/CompanyProfileResponse';
+import { deliveryVolumeResponse } from '../../../../models/deliveryVolumeResponse';
+import { CorporateEventsResponse } from '../../../../models/CorporateEventsResponse';
+import { newsChartResponse } from '../../../../models/newsChartResponse';
 
 @Injectable({
   providedIn: 'root',
@@ -85,5 +90,44 @@ export class AppServices {
 
   getIndianIndicesLive() {
     return this.http.get<IndianIndicesLiveResponse>('http://localhost:3000/indian-indices');
+  }
+
+  getCompanyDetails(searchId: string) {
+    return this.http.get<CompanyProfileResponse>(
+      `https://groww.in/v1/api/stocks_data/v1/company/search_id/${searchId}?page=0&size=1`,
+    );
+  }
+
+  getChartData(codeScript: string, interval: string, days: string) {
+    return this.http.get<ChartResponse>(
+      `https://groww.in/v1/api/charting_service/v2/chart/delayed/exchange/NSE/segment/CASH/${codeScript}/${days}?${interval}&minimal=true`,
+    );
+  }
+
+  getCustomChartData(path: string) {
+    return this.http.get<ChartResponse>(`https://groww.in/v1/api/charting_service/v2/${path}`);
+  }
+
+  getDeliveryVolumePercentage(searchId: string, tf: string) {
+    return this.http.get<deliveryVolumeResponse>(
+      `http://localhost:3000/api/delivery-volume/${searchId}`,
+      {
+        params: {
+          periodType: tf,
+        },
+      },
+    );
+  }
+
+  getEvents(gsin: string) {
+    return this.http.get<CorporateEventsResponse>(
+      `https://groww.in/v1/api/stocks_data/equity_feature/v2/company/corporate_action/event?gsin=${gsin}`,
+    );
+  }
+
+  getNewsStocks(gsin: string) {
+    return this.http.get<newsChartResponse>(
+      `https://groww.in/v1/api/groww-news/v2/stocks/news/${gsin}?page=0&size=10`,
+    );
   }
 }

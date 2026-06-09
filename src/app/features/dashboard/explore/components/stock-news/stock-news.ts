@@ -3,7 +3,8 @@ import { Component, effect, OnInit, signal } from '@angular/core';
 import { AppServices } from '../../../../../core/services/app/app-services';
 import { NewsFeedResponse } from '../../../../../../models/NewsFeedResponse';
 import { TimeAgoPipePipe } from '../../../../../shared/pipes/time-ago-pipe-pipe';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { StockStore } from '../../../../../shared/services/Store/stock-store';
 
 interface NewsStock {
   name: string;
@@ -12,6 +13,7 @@ interface NewsStock {
   snippet: string; // Used for Body
   time: string; // Used for publishedAt
   isPositive: boolean;
+  ctaUrl: string;
 }
 
 @Component({
@@ -24,7 +26,11 @@ interface NewsStock {
 export class StockNews implements OnInit {
   newsStocks = signal<NewsStock[]>([]);
 
-  constructor(private appSer: AppServices) {
+  constructor(
+    private appSer: AppServices,
+    private storeSer: StockStore,
+    private route: Router,
+  ) {
     effect(() => {
       console.log('News Signal Updated:', this.newsStocks());
     });
@@ -50,6 +56,7 @@ export class StockNews implements OnInit {
               // post.data.title.toLowerCase().includes('profit') ||
               // post.data.title.toLowerCase().includes('jump'),
               true,
+            ctaUrl: cta?.ctaUrl.replace('https://groww.in/', ''),
           };
         });
 
@@ -59,5 +66,11 @@ export class StockNews implements OnInit {
         console.error('Error fetching stock news:', err);
       },
     });
+  }
+
+  onNewsClick(i: number) {
+    const url = this.route.serializeUrl(this.route.createUrlTree([this.newsStocks()[i].ctaUrl]));
+
+    window.open(url, '_blank');
   }
 }

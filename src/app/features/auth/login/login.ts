@@ -8,7 +8,7 @@ import {
   returnLoginModel,
   userLoginModel,
 } from '../../../../models/auth-data-model';
-import { SharedDataService } from '../../../core/services/shared-data-service';
+import { SharedDataService } from '../../../shared/services/data-share/shared-data-service';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 

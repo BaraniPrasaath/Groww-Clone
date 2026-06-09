@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth-service';
-import { SharedDataService } from '../../../core/services/shared-data-service';
+import { SharedDataService } from '../../../shared/services/data-share/shared-data-service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
