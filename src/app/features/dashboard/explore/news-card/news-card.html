@@ -1,7 +1,27 @@
 <div
-  class="border border-gray-200 rounded-xl p-4 hover:shadow-md transition-shadow cursor-pointer bg-white"
+  class="group relative border border-gray-200 rounded-xl p-4 hover:shadow-md hover:bg-gray-100 transition-shadow cursor-pointer bg-white"
   (click)="openStock(stock.searchId)"
 >
+  <!-- Save Icon -->
+  <button
+    class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      class="w-5 h-5 text-gray-600"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M5 3h14v18l-7-4-7 4V3z"
+      />
+    </svg>
+  </button>
+
   <img
     [src]="stock.logo"
     [alt]="stock.name"
@@ -13,7 +33,7 @@
   </h3>
 
   <div class="font-medium text-gray-600 text-sm">
-    {{ stock.price | currency:'INR'}}
+    {{ stock.price | currency: 'INR' }}
   </div>
 
   <div [ngClass]="stock.isPositive ? 'text-green-600' : 'text-red-500'" class="font-normal text-sm">
