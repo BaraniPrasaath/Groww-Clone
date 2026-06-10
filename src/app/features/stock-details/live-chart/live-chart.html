@@ -95,9 +95,9 @@
     <span class="text-3xl font-bold text-slate-800 tracking-tight">{{ stockData().price }}</span>
     <div
       class="flex items-center gap-1 text-[13px] font-medium"
-      [ngClass]="changeVal() >= 0 ? 'text-[#00b074]' : 'text-[#ff4d4d]'"
+      [ngClass]="stockData().isPositive ? 'text-[#00b074]' : 'text-[#ff4d4d]'"
     >
-      <span>{{ this.changeVal() }} ({{ this.changePerc() }}%)</span>
+      <span>{{ changeVal() }} ({{ changePerc() }}%)</span>
       <span class="text-slate-400 font-normal ml-0.5 text-[11px]">{{
         this.activeTimeframe()
       }}</span>

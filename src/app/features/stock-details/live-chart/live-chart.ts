@@ -37,7 +37,7 @@ interface Stock {
   name: string;
   logo: string;
   price: string;
-  change: string;
+  changeValue: string;
   changePercent: string;
   isPositive: boolean;
   searchId: string;
@@ -57,7 +57,7 @@ export class LiveChart implements OnInit {
   bseCodeScript = signal('');
   displayName = signal('');
   displayLogo = signal('');
-  changeVal = signal(0);
+  changeVal = signal('');
   changePerc = signal('');
   isNSE = signal(true);
   chartOption = signal('NSE');
@@ -66,7 +66,7 @@ export class LiveChart implements OnInit {
     name: '',
     logo: '',
     price: '',
-    change: '',
+    changeValue: '',
     changePercent: '',
     isPositive: false,
     searchId: '',
@@ -85,7 +85,6 @@ export class LiveChart implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.stockData.set(this.storeSer.getStocks()!);
     const searchId = this.route.snapshot.paramMap.get('id');
     console.log('search id: ', searchId);
     this.appSer.getCompanyDetails(searchId!).subscribe({
@@ -98,6 +97,14 @@ export class LiveChart implements OnInit {
         this.onTimeframeChange('1D');
       },
     });
+  }
+
+  dailyDataRender() {
+    this.stockData.set(this.storeSer.getStocks()!);
+    this.changeVal.set(this.stockData().changeValue);
+    this.changePerc.set(this.stockData().changePercent.replace('%', ''));
+    console.log(this.changeVal());
+    console.log(this.changePerc());
   }
 
   // Add this method to your LiveChart class
@@ -128,18 +135,26 @@ export class LiveChart implements OnInit {
     // Call your service
     this.appSer.getCustomChartData(path).subscribe({
       next: (res) => {
-        this.changeVal.set(Number(res.changeValue?.toFixed(2)) || 0);
-        let rawPerc = res.changePerc || 0;
+        if (tf === '1D') {
+          this.dailyDataRender();
+        } else {
+          this.changeVal.set(res.changeValue?.toFixed(2) || '');
+          this.stockData.update((stock) => ({
+            ...stock,
+            isPositive: Number(this.changeVal()) >= 0,
+          }));
+          let rawPerc = res.changePerc || 0;
 
-        // Example: If API returns 0.0146, this turns it into 1.46
-        // Remove the * 100 if your API already returns the number 1.46
-        let formattedPerc = (rawPerc * 100).toFixed(2);
+          // Example: If API returns 0.0146, this turns it into 1.46
+          // Remove the * 100 if your API already returns the number 1.46
+          let formattedPerc = (rawPerc * 100).toFixed(2);
 
-        this.changePerc.set(
-          this.changeVal() >= 0
-            ? Number(formattedPerc).toFixed(2)
-            : (Number(formattedPerc) * -1).toFixed(2),
-        );
+          this.changePerc.set(
+            Number(this.changeVal()) >= 0
+              ? Number(formattedPerc).toFixed(2)
+              : (Number(formattedPerc) * -1).toFixed(2),
+          );
+        }
         this.chartRawData.set(res.candles);
         this.initChart();
       },
@@ -173,7 +188,7 @@ export class LiveChart implements OnInit {
         defaultLocale: 'en',
         animations: { enabled: false },
       },
-      colors: [this.changeVal() >= 0 ? '#00b074' : '#ED5533'],
+      colors: [Number(this.changeVal()) >= 0 ? '#00b074' : '#ED5533'],
       dataLabels: {
         enabled: false,
       },

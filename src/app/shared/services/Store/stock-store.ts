@@ -4,7 +4,7 @@ interface Stock {
   name: string;
   logo: string;
   price: string;
-  change: string;
+  changeValue: string;
   changePercent: string;
   isPositive: boolean;
   searchId: string;

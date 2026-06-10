@@ -10,7 +10,7 @@ interface Stock {
   name: string;
   logo: string;
   price: string;
-  change: string;
+  changeValue: string;
   changePercent: string;
   volume: number;
   isHovered?: boolean;
@@ -82,18 +82,18 @@ export class TopMovers {
     this.appSer.getTopMovers(moverType, index, 6).subscribe({
       next: (res: TopMoversResponse) => {
         const stocks: Stock[] = res.data.stocks.map((stock) => {
-          const change = stock.ltp - stock.close;
-          const changePercent = (change / stock.close) * 100;
+          const changeValue = stock.ltp - stock.close;
+          const changePercent = (changeValue / stock.close) * 100;
 
           return {
             name: stock.companyName,
             logo: stock.logoUrl,
             price: stock.ltp.toFixed(2),
-            change: change.toFixed(2),
-            changePercent: `(${Math.abs(changePercent).toFixed(2)}%)`,
+            changeValue: changeValue.toFixed(2),
+            changePercent: `${Math.abs(changePercent).toFixed(2)}%`,
             volume: stock.volumeWeekAvg,
             isHovered: false,
-            isPositive: change >= 0,
+            isPositive: changeValue >= 0,
             searchId: stock.searchId,
             nseScriptCode: stock.nseScriptCode,
           };
