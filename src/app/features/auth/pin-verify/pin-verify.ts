@@ -41,7 +41,7 @@ export class PinVerify {
         this.dataSer.setUserProfile(profile);
         this.route.navigate(['/success']);
         setTimeout(() => {
-          this.route.navigate(['/explore']);
+          this.route.navigate(['user/explore']);
         }, 2000);
       });
     }
